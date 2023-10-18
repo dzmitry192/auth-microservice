@@ -34,4 +34,14 @@ public class ClientEntity {
     private String address;
     @Enumerated(EnumType.STRING)
     private Role role;
+
+    public ClientEntity(String firstName, String lastName, String email, String password, String phoneNumber, String address, Role role) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
+        this.password = password;
+        this.phoneNumber = phoneNumber;
+        this.address = address;
+        this.role = role;
+    }
 }

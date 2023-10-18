@@ -6,5 +6,10 @@ import lombok.Data;
 public class SignupAndRefreshTokenResponse {
     private String accessToken;
     private String refreshToken;
-    private String type;
+    private String type = "Bearer";
+
+    public SignupAndRefreshTokenResponse(String accessToken, String refreshToken) {
+        this.accessToken = accessToken;
+        this.refreshToken = refreshToken;
+    }
 }
