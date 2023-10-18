@@ -9,5 +9,5 @@ import com.innowise.authmicroservice.payload.response.SignupAndRefreshTokenRespo
 public interface AuthService {
     LoginResponse login(LoginRequest login);
     SignupAndRefreshTokenResponse signup(SignupRequest signup) throws Exception;
-//    SignupAndRefreshTokenResponse refresh(RefreshTokenRequest refreshToken);
+    SignupAndRefreshTokenResponse refresh(RefreshTokenRequest refreshToken) throws Exception;
 }
