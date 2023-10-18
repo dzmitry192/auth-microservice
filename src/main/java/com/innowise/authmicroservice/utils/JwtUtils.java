@@ -34,6 +34,10 @@ public class JwtUtils {
                 .compact();
     }
 
+    public String getSubject(String token) {
+        return Jwts.claims().getSubject();
+    }
+
     public String generateRefreshToken(@NonNull ClientEntity client) {
         final LocalDateTime now = LocalDateTime.now();
         final Instant refreshExpirationInstant = now.plusDays(30).atZone(ZoneId.systemDefault()).toInstant();
