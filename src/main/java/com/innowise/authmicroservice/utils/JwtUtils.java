@@ -2,12 +2,16 @@ package com.innowise.authmicroservice.utils;
 
 import com.innowise.authmicroservice.entity.ClientEntity;
 import io.jsonwebtoken.*;
+import io.jsonwebtoken.io.Decoders;
+import io.jsonwebtoken.security.Keys;
 import lombok.NonNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
+import javax.crypto.SecretKey;
+import java.security.Key;
 import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
@@ -17,11 +21,16 @@ import java.util.Date;
 public class JwtUtils {
     private static final Logger logger = LoggerFactory.getLogger(JwtUtils.class);
 
-    @Value("${jwt.secret.access}")
-    private String jwtAccessSecret;
+    private final SecretKey jwtAccessSecret;
+    private final SecretKey jwtRefreshSecret;
 
-    @Value("${jwt.secret.refresh}")
-    private String jwtRefreshSecret;
+    public JwtUtils(
+            @Value("${jwt.secret.access}") String jwtAccessSecret,
+            @Value("${jwt.secret.refresh}") String jwtRefreshSecret
+    ) {
+        this.jwtAccessSecret = Keys.hmacShaKeyFor(Decoders.BASE64.decode(jwtAccessSecret));
+        this.jwtRefreshSecret = Keys.hmacShaKeyFor(Decoders.BASE64.decode(jwtRefreshSecret));
+    }
 
     public String generateAccessToken(@NonNull ClientEntity client) {
         final LocalDateTime now = LocalDateTime.now();
@@ -30,7 +39,7 @@ public class JwtUtils {
         return Jwts.builder()
                 .setSubject(client.getEmail())
                 .setExpiration(accessExpiration)
-                .signWith(SignatureAlgorithm.ES256, jwtAccessSecret)
+                .signWith(jwtAccessSecret)
                 .claim("roles", client.getRole())
                 .compact();
     }
@@ -46,11 +55,11 @@ public class JwtUtils {
         return Jwts.builder()
                 .setSubject(client.getEmail())
                 .setExpiration(refreshExpiration)
-                .signWith(SignatureAlgorithm.ES256, jwtRefreshSecret)
+                .signWith(jwtRefreshSecret)
                 .compact();
     }
 
-    public boolean validateAccessToken(@NonNull String accessToken) {
+        public boolean validateAccessToken(@NonNull String accessToken) {
         return validateToken(accessToken, jwtAccessSecret);
     }
 
@@ -58,7 +67,7 @@ public class JwtUtils {
         return validateToken(refreshToken, jwtRefreshSecret);
     }
 
-    private boolean validateToken(@NonNull String token, @NonNull String secret) {
+    private boolean validateToken(@NonNull String token, @NonNull Key secret) {
         try {
             Jwts.parserBuilder()
                     .setSigningKey(secret)
@@ -85,7 +94,7 @@ public class JwtUtils {
         return getClaims(token, jwtRefreshSecret);
     }
 
-    private Claims getClaims(@NonNull String token, @NonNull String secret) {
+    private Claims getClaims(@NonNull String token, @NonNull Key secret) {
         return Jwts.parserBuilder()
                 .setSigningKey(secret)
                 .build()
