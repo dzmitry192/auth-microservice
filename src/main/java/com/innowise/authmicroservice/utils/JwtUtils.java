@@ -1,36 +1,28 @@
 package com.innowise.authmicroservice.utils;
 
 import com.innowise.authmicroservice.entity.ClientEntity;
+import com.innowise.authmicroservice.entity.RefreshTokenEntity;
 import io.jsonwebtoken.*;
-import io.jsonwebtoken.io.Decoders;
-import io.jsonwebtoken.security.Keys;
 import lombok.NonNull;
+import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
-import javax.crypto.SecretKey;
-import java.security.Key;
 import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.Date;
 
 @Component
+@RequiredArgsConstructor
 public class JwtUtils {
     private static final Logger logger = LoggerFactory.getLogger(JwtUtils.class);
-
-    private final SecretKey jwtAccessSecret;
-    private final SecretKey jwtRefreshSecret;
-
-    public JwtUtils(
-            @Value("${jwt.secret.access}") String jwtAccessSecret,
-            @Value("${jwt.secret.refresh}") String jwtRefreshSecret
-    ) {
-        this.jwtAccessSecret = Keys.hmacShaKeyFor(Decoders.BASE64.decode(jwtAccessSecret));
-        this.jwtRefreshSecret = Keys.hmacShaKeyFor(Decoders.BASE64.decode(jwtRefreshSecret));
-    }
+    @Value("${jwt.secret.access}")
+    private String jwtAccessSecret;
+    @Value("${jwt.secret.refresh}")
+    private String jwtRefreshSecret;
 
     public String generateAccessToken(@NonNull ClientEntity client) {
         final LocalDateTime now = LocalDateTime.now();
@@ -39,7 +31,7 @@ public class JwtUtils {
         return Jwts.builder()
                 .setSubject(client.getEmail())
                 .setExpiration(accessExpiration)
-                .signWith(jwtAccessSecret)
+                .signWith(SignatureAlgorithm.HS384, jwtAccessSecret)
                 .claim("roles", client.getRole())
                 .compact();
     }
@@ -48,18 +40,21 @@ public class JwtUtils {
         return Jwts.claims().getSubject();
     }
 
-    public String generateRefreshToken(@NonNull ClientEntity client) {
+    public RefreshTokenEntity generateRefreshToken(@NonNull ClientEntity client) {
         final LocalDateTime now = LocalDateTime.now();
         final Instant refreshExpirationInstant = now.plusDays(30).atZone(ZoneId.systemDefault()).toInstant();
         final Date refreshExpiration = Date.from(refreshExpirationInstant);
-        return Jwts.builder()
+
+        String refreshToken = Jwts.builder()
                 .setSubject(client.getEmail())
                 .setExpiration(refreshExpiration)
-                .signWith(jwtRefreshSecret)
+                .signWith(SignatureAlgorithm.HS384, jwtRefreshSecret)
                 .compact();
+
+        return new RefreshTokenEntity(refreshToken, refreshExpiration, client.getId());
     }
 
-        public boolean validateAccessToken(@NonNull String accessToken) {
+    public boolean validateAccessToken(@NonNull String accessToken) {
         return validateToken(accessToken, jwtAccessSecret);
     }
 
@@ -67,10 +62,10 @@ public class JwtUtils {
         return validateToken(refreshToken, jwtRefreshSecret);
     }
 
-    private boolean validateToken(@NonNull String token, @NonNull Key secret) {
+    private boolean validateToken(String token, @NonNull String secret) {
         try {
             Jwts.parserBuilder()
-                    .setSigningKey(secret)
+                    .setSigningKey(secret.getBytes())
                     .build()
                     .parseClaimsJws(token);
             return true;
@@ -94,9 +89,9 @@ public class JwtUtils {
         return getClaims(token, jwtRefreshSecret);
     }
 
-    private Claims getClaims(@NonNull String token, @NonNull Key secret) {
+    private Claims getClaims(String token, @NonNull String secret) {
         return Jwts.parserBuilder()
-                .setSigningKey(secret)
+                .setSigningKey(secret.getBytes())
                 .build()
                 .parseClaimsJws(token)
                 .getBody();

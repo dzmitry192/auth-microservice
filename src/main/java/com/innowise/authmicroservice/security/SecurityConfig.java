@@ -50,7 +50,7 @@ public class SecurityConfig {
         http.cors(AbstractHttpConfigurer::disable)
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(auth ->
-                        auth.requestMatchers("/auth/signup", "/auth/login").permitAll()
+                        auth.requestMatchers("/auth/signup", "/auth/login", "/auth/refresh").permitAll()
                                 .anyRequest().authenticated())
                 .httpBasic(AbstractHttpConfigurer::disable);
 

@@ -7,6 +7,7 @@ import com.innowise.authmicroservice.payload.response.LoginResponse;
 import com.innowise.authmicroservice.payload.response.SignupAndRefreshTokenResponse;
 import com.innowise.authmicroservice.service.impl.AuthServiceImpl;
 import jakarta.validation.Valid;
+import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -15,13 +16,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/auth")
+@AllArgsConstructor
 public class AuthController {
 
     private final AuthServiceImpl authService;
-
-    public AuthController(AuthServiceImpl authService) {
-        this.authService = authService;
-    }
 
     @PostMapping("/login")
     public ResponseEntity<LoginResponse> login(@Valid @RequestBody LoginRequest loginRequest) {

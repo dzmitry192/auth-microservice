@@ -1,13 +1,13 @@
 package com.innowise.authmicroservice.payload.response;
 
 import lombok.Data;
+import lombok.NonNull;
+import lombok.RequiredArgsConstructor;
 
 @Data
+@RequiredArgsConstructor
 public class LoginResponse {
+    @NonNull
     private String accessToken;
-    private String type = "Bearer";
-
-    public LoginResponse(String accessToken) {
-        this.accessToken = accessToken;
-    }
+    private final String TYPE = "Bearer ";
 }

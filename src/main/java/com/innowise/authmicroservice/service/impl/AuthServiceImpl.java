@@ -12,27 +12,23 @@ import com.innowise.authmicroservice.repository.ClientRepository;
 import com.innowise.authmicroservice.repository.RefreshTokenRepository;
 import com.innowise.authmicroservice.service.AuthService;
 import com.innowise.authmicroservice.utils.JwtUtils;
+import lombok.AllArgsConstructor;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
 @Service
+@AllArgsConstructor
 public class AuthServiceImpl implements AuthService {
     private final JwtUtils jwtUtils;
     private final ClientRepository clientRepository;
     private final RefreshTokenRepository refreshTokenRepository;
 
-    public AuthServiceImpl(JwtUtils jwtUtils, ClientRepository clientRepository, RefreshTokenRepository refreshTokenRepository) {
-        this.jwtUtils = jwtUtils;
-        this.clientRepository = clientRepository;
-        this.refreshTokenRepository = refreshTokenRepository;
-    }
-
     @Override
     public LoginResponse login(LoginRequest login) {
         ClientEntity client = clientRepository.findByEmail(login.getEmail());
-        if(client == null) {
+        if (client == null) {
             throw new UsernameNotFoundException("User Not Found!");
         }
 
@@ -41,7 +37,7 @@ public class AuthServiceImpl implements AuthService {
 
     @Override
     public SignupAndRefreshTokenResponse signup(SignupRequest signup) throws Exception {
-        if(clientRepository.existsByEmail(signup.getEmail())) {
+        if (clientRepository.existsByEmail(signup.getEmail())) {
             throw new Exception("User is already exists!");
         }
 
@@ -55,19 +51,21 @@ public class AuthServiceImpl implements AuthService {
         clientRepository.save(client);
 
         String accessToken = jwtUtils.generateAccessToken(client);
-        String refreshToken = jwtUtils.generateRefreshToken(client);
+        RefreshTokenEntity refreshToken = jwtUtils.generateRefreshToken(client);
 
-        return new SignupAndRefreshTokenResponse(accessToken, refreshToken);
+        refreshTokenRepository.save(refreshToken);
+
+        return new SignupAndRefreshTokenResponse(accessToken, refreshToken.getToken());
     }
 
     @Override
     public SignupAndRefreshTokenResponse refresh(RefreshTokenRequest refreshTokenRequest) throws Exception {
         RefreshTokenEntity refreshToken = refreshTokenRepository.findByToken(refreshTokenRequest.getRefreshToken());
-        if(refreshToken == null || jwtUtils.validateRefreshToken(refreshToken.getToken())) {
+        if (refreshToken == null || jwtUtils.validateRefreshToken(refreshToken.getToken())) {
             throw new Exception("There is no refresh token in database!");
         } else {
             Optional<ClientEntity> client = clientRepository.findById(refreshToken.getClientId());
-            if(client.isPresent()) {
+            if (client.isPresent()) {
                 String accessToken = jwtUtils.generateAccessToken(client.get());
                 return new SignupAndRefreshTokenResponse(accessToken, refreshToken.getToken());
             } else {
