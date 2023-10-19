@@ -1,4 +1,4 @@
-package com.innowise.authmicroservice.service;
+package com.innowise.authmicroservice.security.service;
 
 import com.innowise.authmicroservice.entity.ClientEntity;
 import com.innowise.authmicroservice.repository.ClientRepository;
@@ -19,7 +19,7 @@ public class CustomUserDetailsService implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String email) {
         ClientEntity client = clientRepository.findByEmail(email);
-        if(client == null) {
+        if (client == null) {
             throw new UsernameNotFoundException("User not found!");
         }
         return CustomUserDetails.build(client);

@@ -2,35 +2,35 @@ package com.innowise.authmicroservice.entity;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 @Data
 @Entity
 @Table(name = "clients")
 @NoArgsConstructor
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class ClientEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @NotBlank
+    @NonNull
     @Size(min = 2, max = 20)
     private String firstName;
-    @NotBlank
+    @NonNull
     @Size(min = 2, max = 30)
     private String lastName;
     @Email
+    @NonNull
     private String email;
-    @NotBlank
+    @Size(min = 4)
+    @NonNull
     private String password;
-    @NotBlank
+    @NonNull
     private String phoneNumber;
-    @NotBlank
+    @NonNull
     private String address;
+    @NonNull
     @Enumerated(EnumType.STRING)
     private Role role;
 }

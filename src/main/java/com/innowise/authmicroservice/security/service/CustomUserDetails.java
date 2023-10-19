@@ -1,4 +1,4 @@
-package com.innowise.authmicroservice.service;
+package com.innowise.authmicroservice.security.service;
 
 import com.innowise.authmicroservice.entity.ClientEntity;
 import com.innowise.authmicroservice.entity.Role;
