@@ -3,6 +3,8 @@ package com.innowise.authmicroservice.utils;
 import com.innowise.authmicroservice.entity.ClientEntity;
 import com.innowise.authmicroservice.entity.RefreshTokenEntity;
 import io.jsonwebtoken.*;
+import io.jsonwebtoken.security.SignatureException;
+import lombok.Data;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
@@ -13,9 +15,11 @@ import org.springframework.stereotype.Component;
 import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
+import java.util.Base64;
 import java.util.Date;
 
 @Component
+@Data
 @RequiredArgsConstructor
 public class JwtUtils {
     private static final Logger logger = LoggerFactory.getLogger(JwtUtils.class);
@@ -31,13 +35,17 @@ public class JwtUtils {
         return Jwts.builder()
                 .setSubject(client.getEmail())
                 .setExpiration(accessExpiration)
-                .signWith(SignatureAlgorithm.HS384, jwtAccessSecret)
+                .signWith(SignatureAlgorithm.HS384, jwtAccessSecret.getBytes())
                 .claim("roles", client.getRole())
                 .compact();
     }
 
-    public String getSubject(String token) {
-        return Jwts.claims().getSubject();
+    public String getSubject(String token, String secret) {
+        return Jwts.parserBuilder()
+                .setSigningKey(secret.getBytes())
+                .build()
+                .parseClaimsJws(token)
+                .getBody().getSubject();
     }
 
     public RefreshTokenEntity generateRefreshToken(@NonNull ClientEntity client) {
@@ -48,7 +56,7 @@ public class JwtUtils {
         String refreshToken = Jwts.builder()
                 .setSubject(client.getEmail())
                 .setExpiration(refreshExpiration)
-                .signWith(SignatureAlgorithm.HS384, jwtRefreshSecret)
+                .signWith(SignatureAlgorithm.HS384, jwtRefreshSecret.getBytes())
                 .compact();
 
         return new RefreshTokenEntity(refreshToken, refreshExpiration, client.getId());
@@ -75,9 +83,14 @@ public class JwtUtils {
             logger.error("Unsupported jwt", unsEx);
         } catch (MalformedJwtException mjEx) {
             logger.error("Malformed jwt", mjEx);
+        } catch (SignatureException e) {
+            logger.error("JWT signature does not match locally computed signature", e);
+        } catch (IllegalArgumentException e) {
+            logger.error("IllegalArgumentException", e);
         } catch (Exception e) {
             logger.error("invalid token", e);
         }
+
         return false;
     }
 
