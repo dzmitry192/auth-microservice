@@ -5,17 +5,19 @@
  */
 package com.innowise.authmicroservice.avro;
 
+import org.apache.avro.generic.GenericArray;
 import org.apache.avro.specific.SpecificData;
+import org.apache.avro.util.Utf8;
 import org.apache.avro.message.BinaryMessageEncoder;
 import org.apache.avro.message.BinaryMessageDecoder;
 import org.apache.avro.message.SchemaStore;
 
 @org.apache.avro.specific.AvroGenerated
 public class TokenResponse extends org.apache.avro.specific.SpecificRecordBase implements org.apache.avro.specific.SpecificRecord {
-  private static final long serialVersionUID = 9134388344743558027L;
+  private static final long serialVersionUID = -7388520356282123541L;
 
 
-  public static final org.apache.avro.Schema SCHEMA$ = new org.apache.avro.Schema.Parser().parse("{\"type\":\"record\",\"name\":\"TokenResponse\",\"namespace\":\"avro\",\"fields\":[{\"name\":\"isValid\",\"type\":\"boolean\"}]}");
+  public static final org.apache.avro.Schema SCHEMA$ = new org.apache.avro.Schema.Parser().parse("{\"type\":\"record\",\"name\":\"TokenResponse\",\"namespace\":\"com.innowise.authmicroservice.avro\",\"fields\":[{\"name\":\"isValid\",\"type\":\"boolean\"}]}");
   public static org.apache.avro.Schema getClassSchema() { return SCHEMA$; }
 
   private static final SpecificData MODEL$ = new SpecificData();
@@ -134,8 +136,8 @@ public class TokenResponse extends org.apache.avro.specific.SpecificRecordBase i
    * Creates a new TokenResponse RecordBuilder.
    * @return A new TokenResponse RecordBuilder
    */
-  public static TokenResponse.Builder newBuilder() {
-    return new TokenResponse.Builder();
+  public static com.innowise.authmicroservice.avro.TokenResponse.Builder newBuilder() {
+    return new com.innowise.authmicroservice.avro.TokenResponse.Builder();
   }
 
   /**
@@ -143,11 +145,11 @@ public class TokenResponse extends org.apache.avro.specific.SpecificRecordBase i
    * @param other The existing builder to copy.
    * @return A new TokenResponse RecordBuilder
    */
-  public static TokenResponse.Builder newBuilder(TokenResponse.Builder other) {
+  public static com.innowise.authmicroservice.avro.TokenResponse.Builder newBuilder(com.innowise.authmicroservice.avro.TokenResponse.Builder other) {
     if (other == null) {
-      return new TokenResponse.Builder();
+      return new com.innowise.authmicroservice.avro.TokenResponse.Builder();
     } else {
-      return new TokenResponse.Builder(other);
+      return new com.innowise.authmicroservice.avro.TokenResponse.Builder(other);
     }
   }
 
@@ -156,11 +158,11 @@ public class TokenResponse extends org.apache.avro.specific.SpecificRecordBase i
    * @param other The existing instance to copy.
    * @return A new TokenResponse RecordBuilder
    */
-  public static TokenResponse.Builder newBuilder(TokenResponse other) {
+  public static com.innowise.authmicroservice.avro.TokenResponse.Builder newBuilder(com.innowise.authmicroservice.avro.TokenResponse other) {
     if (other == null) {
-      return new TokenResponse.Builder();
+      return new com.innowise.authmicroservice.avro.TokenResponse.Builder();
     } else {
-      return new TokenResponse.Builder(other);
+      return new com.innowise.authmicroservice.avro.TokenResponse.Builder(other);
     }
   }
 
@@ -182,7 +184,7 @@ public class TokenResponse extends org.apache.avro.specific.SpecificRecordBase i
      * Creates a Builder by copying an existing Builder.
      * @param other The existing Builder to copy.
      */
-    private Builder(TokenResponse.Builder other) {
+    private Builder(com.innowise.authmicroservice.avro.TokenResponse.Builder other) {
       super(other);
       if (isValidValue(fields()[0], other.isValid)) {
         this.isValid = data().deepCopy(fields()[0].schema(), other.isValid);
@@ -194,7 +196,7 @@ public class TokenResponse extends org.apache.avro.specific.SpecificRecordBase i
      * Creates a Builder by copying an existing TokenResponse instance
      * @param other The existing instance to copy.
      */
-    private Builder(TokenResponse other) {
+    private Builder(com.innowise.authmicroservice.avro.TokenResponse other) {
       super(SCHEMA$, MODEL$);
       if (isValidValue(fields()[0], other.isValid)) {
         this.isValid = data().deepCopy(fields()[0].schema(), other.isValid);
@@ -216,7 +218,7 @@ public class TokenResponse extends org.apache.avro.specific.SpecificRecordBase i
       * @param value The value of 'isValid'.
       * @return This builder.
       */
-    public TokenResponse.Builder setIsValid(boolean value) {
+    public com.innowise.authmicroservice.avro.TokenResponse.Builder setIsValid(boolean value) {
       validate(fields()[0], value);
       this.isValid = value;
       fieldSetFlags()[0] = true;
@@ -236,7 +238,7 @@ public class TokenResponse extends org.apache.avro.specific.SpecificRecordBase i
       * Clears the value of the 'isValid' field.
       * @return This builder.
       */
-    public TokenResponse.Builder clearIsValid() {
+    public com.innowise.authmicroservice.avro.TokenResponse.Builder clearIsValid() {
       fieldSetFlags()[0] = false;
       return this;
     }

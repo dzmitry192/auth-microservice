@@ -14,10 +14,10 @@ import org.apache.avro.message.SchemaStore;
 
 @org.apache.avro.specific.AvroGenerated
 public class TokenRequest extends org.apache.avro.specific.SpecificRecordBase implements org.apache.avro.specific.SpecificRecord {
-  private static final long serialVersionUID = -4796900253986429045L;
+  private static final long serialVersionUID = 7218610038773642396L;
 
 
-  public static final org.apache.avro.Schema SCHEMA$ = new org.apache.avro.Schema.Parser().parse("{\"type\":\"record\",\"name\":\"TokenRequest\",\"namespace\":\"avro\",\"fields\":[{\"name\":\"token\",\"type\":\"string\"}]}");
+  public static final org.apache.avro.Schema SCHEMA$ = new org.apache.avro.Schema.Parser().parse("{\"type\":\"record\",\"name\":\"TokenRequest\",\"namespace\":\"com.innowise.authmicroservice.avro\",\"fields\":[{\"name\":\"token\",\"type\":\"string\"}]}");
   public static org.apache.avro.Schema getClassSchema() { return SCHEMA$; }
 
   private static final SpecificData MODEL$ = new SpecificData();
@@ -136,8 +136,8 @@ public class TokenRequest extends org.apache.avro.specific.SpecificRecordBase im
    * Creates a new TokenRequest RecordBuilder.
    * @return A new TokenRequest RecordBuilder
    */
-  public static TokenRequest.Builder newBuilder() {
-    return new TokenRequest.Builder();
+  public static com.innowise.authmicroservice.avro.TokenRequest.Builder newBuilder() {
+    return new com.innowise.authmicroservice.avro.TokenRequest.Builder();
   }
 
   /**
@@ -145,11 +145,11 @@ public class TokenRequest extends org.apache.avro.specific.SpecificRecordBase im
    * @param other The existing builder to copy.
    * @return A new TokenRequest RecordBuilder
    */
-  public static TokenRequest.Builder newBuilder(TokenRequest.Builder other) {
+  public static com.innowise.authmicroservice.avro.TokenRequest.Builder newBuilder(com.innowise.authmicroservice.avro.TokenRequest.Builder other) {
     if (other == null) {
-      return new TokenRequest.Builder();
+      return new com.innowise.authmicroservice.avro.TokenRequest.Builder();
     } else {
-      return new TokenRequest.Builder(other);
+      return new com.innowise.authmicroservice.avro.TokenRequest.Builder(other);
     }
   }
 
@@ -158,11 +158,11 @@ public class TokenRequest extends org.apache.avro.specific.SpecificRecordBase im
    * @param other The existing instance to copy.
    * @return A new TokenRequest RecordBuilder
    */
-  public static TokenRequest.Builder newBuilder(TokenRequest other) {
+  public static com.innowise.authmicroservice.avro.TokenRequest.Builder newBuilder(com.innowise.authmicroservice.avro.TokenRequest other) {
     if (other == null) {
-      return new TokenRequest.Builder();
+      return new com.innowise.authmicroservice.avro.TokenRequest.Builder();
     } else {
-      return new TokenRequest.Builder(other);
+      return new com.innowise.authmicroservice.avro.TokenRequest.Builder(other);
     }
   }
 
@@ -184,7 +184,7 @@ public class TokenRequest extends org.apache.avro.specific.SpecificRecordBase im
      * Creates a Builder by copying an existing Builder.
      * @param other The existing Builder to copy.
      */
-    private Builder(TokenRequest.Builder other) {
+    private Builder(com.innowise.authmicroservice.avro.TokenRequest.Builder other) {
       super(other);
       if (isValidValue(fields()[0], other.token)) {
         this.token = data().deepCopy(fields()[0].schema(), other.token);
@@ -196,7 +196,7 @@ public class TokenRequest extends org.apache.avro.specific.SpecificRecordBase im
      * Creates a Builder by copying an existing TokenRequest instance
      * @param other The existing instance to copy.
      */
-    private Builder(TokenRequest other) {
+    private Builder(com.innowise.authmicroservice.avro.TokenRequest other) {
       super(SCHEMA$, MODEL$);
       if (isValidValue(fields()[0], other.token)) {
         this.token = data().deepCopy(fields()[0].schema(), other.token);
@@ -218,7 +218,7 @@ public class TokenRequest extends org.apache.avro.specific.SpecificRecordBase im
       * @param value The value of 'token'.
       * @return This builder.
       */
-    public TokenRequest.Builder setToken(java.lang.CharSequence value) {
+    public com.innowise.authmicroservice.avro.TokenRequest.Builder setToken(java.lang.CharSequence value) {
       validate(fields()[0], value);
       this.token = value;
       fieldSetFlags()[0] = true;
@@ -238,7 +238,7 @@ public class TokenRequest extends org.apache.avro.specific.SpecificRecordBase im
       * Clears the value of the 'token' field.
       * @return This builder.
       */
-    public TokenRequest.Builder clearToken() {
+    public com.innowise.authmicroservice.avro.TokenRequest.Builder clearToken() {
       token = null;
       fieldSetFlags()[0] = false;
       return this;

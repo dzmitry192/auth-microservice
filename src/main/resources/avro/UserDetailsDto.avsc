@@ -1,15 +1,14 @@
 {
   "type": "record",
   "name": "UserDetailsDto",
-  "namespace": "avro",
+  "namespace": "com.innowise.authmicroservice.avro",
   "fields": [
-    {
-      "name": "name",
-      "type": "string"
-    },
-    {
-      "name": "age",
-      "type": "int"
-    }
+    {"name": "username", "type": "string"},
+    {"name": "password", "type": "string"},
+    {"name": "enabled", "type": "boolean"},
+    {"name": "accountNonExpired", "type": "boolean"},
+    {"name": "credentialsNonExpired", "type": "boolean"},
+    {"name": "accountNonLocked", "type": "boolean"},
+    {"name": "authorities", "type": {"type": "array", "items": "string"}}
   ]
 }

@@ -2,12 +2,14 @@ package com.innowise.authmicroservice.utils;
 
 import com.innowise.authmicroservice.entity.ClientEntity;
 import com.innowise.authmicroservice.entity.RefreshTokenEntity;
+import com.innowise.authmicroservice.repository.ClientRepository;
 import io.jsonwebtoken.*;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
 import java.time.Instant;
@@ -23,6 +25,8 @@ public class JwtUtils {
     private String jwtAccessSecret;
     @Value("${jwt.secret.refresh}")
     private String jwtRefreshSecret;
+    @NonNull
+    private ClientRepository clientRepository;
 
     public String generateAccessToken(@NonNull ClientEntity client) {
         final LocalDateTime now = LocalDateTime.now();
@@ -38,6 +42,10 @@ public class JwtUtils {
 
     public String getSubject(String token) {
         return Jwts.claims().getSubject();
+    }
+
+    public ClientEntity getClientFromToken(String token) {
+        return clientRepository.findByEmail(getSubject(token));
     }
 
     public RefreshTokenEntity generateRefreshToken(@NonNull ClientEntity client) {
