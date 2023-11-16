@@ -17,7 +17,7 @@
     <properties>
         <java.version>17</java.version>
         <spring-boot-starter-security.version>3.1.3</spring-boot-starter-security.version>
-        <jjwt-api-jackson-impl.version>0.11.5</jjwt-api-jackson-impl.version>
+        <jjwt-api-jackson-impl.version>0.12.3</jjwt-api-jackson-impl.version>
         <spring.kafka.version>3.0.12</spring.kafka.version>
         <avro.version>1.11.1</avro.version>
         <confluent.version>7.5.1</confluent.version>
@@ -88,13 +88,6 @@
         </dependency>
 
         <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-devtools</artifactId>
-            <scope>runtime</scope>
-            <optional>true</optional>
-        </dependency>
-
-        <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
             <optional>true</optional>
@@ -129,6 +122,7 @@
             <version>${jjwt-api-jackson-impl.version}</version>
             <scope>runtime</scope>
         </dependency>
+
         <dependency>
             <groupId>io.jsonwebtoken</groupId>
             <artifactId>jjwt-jackson</artifactId>
@@ -153,12 +147,12 @@
                     <previousSchemaPaths/>
                     <schemas/>
                     <subjects>
-                        <TokenResponse>src/main/resources/avro/TokenResponse.avsc</TokenResponse>
-                        <UserDetails>src/main/resources/avro/UserDetails.avsc</UserDetails>
+                        <UserDetailsResponse>src/main/resources/avro/UserDetailsResponse.avsc</UserDetailsResponse>
                     </subjects>
                     <outputDirectory>src/main/resources/avro</outputDirectory>
                     <subjectPatterns>
-                        <param>^.+$</param>
+                        <param>^UserDetailsRequest$</param>
+                        <param>^UserDetailsResponse$</param>
                     </subjectPatterns>
                 </configuration>
 

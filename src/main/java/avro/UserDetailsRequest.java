@@ -3,7 +3,7 @@
  *
  * DO NOT EDIT DIRECTLY
  */
-package com.innowise.authmicroservice.avro;
+package avro;
 
 import org.apache.avro.generic.GenericArray;
 import org.apache.avro.specific.SpecificData;
@@ -13,26 +13,26 @@ import org.apache.avro.message.BinaryMessageDecoder;
 import org.apache.avro.message.SchemaStore;
 
 @org.apache.avro.specific.AvroGenerated
-public class TokenResponse extends org.apache.avro.specific.SpecificRecordBase implements org.apache.avro.specific.SpecificRecord {
-  private static final long serialVersionUID = -7388520356282123541L;
+public class UserDetailsRequest extends org.apache.avro.specific.SpecificRecordBase implements org.apache.avro.specific.SpecificRecord {
+  private static final long serialVersionUID = 9003015987223550024L;
 
 
-  public static final org.apache.avro.Schema SCHEMA$ = new org.apache.avro.Schema.Parser().parse("{\"type\":\"record\",\"name\":\"TokenResponse\",\"namespace\":\"com.innowise.authmicroservice.avro\",\"fields\":[{\"name\":\"isValid\",\"type\":\"boolean\"}]}");
+  public static final org.apache.avro.Schema SCHEMA$ = new org.apache.avro.Schema.Parser().parse("{\"type\":\"record\",\"name\":\"UserDetailsRequest\",\"namespace\":\"avro\",\"fields\":[{\"name\":\"token\",\"type\":\"string\"}]}");
   public static org.apache.avro.Schema getClassSchema() { return SCHEMA$; }
 
   private static final SpecificData MODEL$ = new SpecificData();
 
-  private static final BinaryMessageEncoder<TokenResponse> ENCODER =
+  private static final BinaryMessageEncoder<UserDetailsRequest> ENCODER =
       new BinaryMessageEncoder<>(MODEL$, SCHEMA$);
 
-  private static final BinaryMessageDecoder<TokenResponse> DECODER =
+  private static final BinaryMessageDecoder<UserDetailsRequest> DECODER =
       new BinaryMessageDecoder<>(MODEL$, SCHEMA$);
 
   /**
    * Return the BinaryMessageEncoder instance used by this class.
    * @return the message encoder used by this class
    */
-  public static BinaryMessageEncoder<TokenResponse> getEncoder() {
+  public static BinaryMessageEncoder<UserDetailsRequest> getEncoder() {
     return ENCODER;
   }
 
@@ -40,7 +40,7 @@ public class TokenResponse extends org.apache.avro.specific.SpecificRecordBase i
    * Return the BinaryMessageDecoder instance used by this class.
    * @return the message decoder used by this class
    */
-  public static BinaryMessageDecoder<TokenResponse> getDecoder() {
+  public static BinaryMessageDecoder<UserDetailsRequest> getDecoder() {
     return DECODER;
   }
 
@@ -49,12 +49,12 @@ public class TokenResponse extends org.apache.avro.specific.SpecificRecordBase i
    * @param resolver a {@link SchemaStore} used to find schemas by fingerprint
    * @return a BinaryMessageDecoder instance for this class backed by the given SchemaStore
    */
-  public static BinaryMessageDecoder<TokenResponse> createDecoder(SchemaStore resolver) {
+  public static BinaryMessageDecoder<UserDetailsRequest> createDecoder(SchemaStore resolver) {
     return new BinaryMessageDecoder<>(MODEL$, SCHEMA$, resolver);
   }
 
   /**
-   * Serializes this TokenResponse to a ByteBuffer.
+   * Serializes this UserDetailsRequest to a ByteBuffer.
    * @return a buffer holding the serialized data for this instance
    * @throws java.io.IOException if this instance could not be serialized
    */
@@ -63,31 +63,31 @@ public class TokenResponse extends org.apache.avro.specific.SpecificRecordBase i
   }
 
   /**
-   * Deserializes a TokenResponse from a ByteBuffer.
+   * Deserializes a UserDetailsRequest from a ByteBuffer.
    * @param b a byte buffer holding serialized data for an instance of this class
-   * @return a TokenResponse instance decoded from the given buffer
+   * @return a UserDetailsRequest instance decoded from the given buffer
    * @throws java.io.IOException if the given bytes could not be deserialized into an instance of this class
    */
-  public static TokenResponse fromByteBuffer(
+  public static UserDetailsRequest fromByteBuffer(
       java.nio.ByteBuffer b) throws java.io.IOException {
     return DECODER.decode(b);
   }
 
-  private boolean isValid;
+  private java.lang.CharSequence token;
 
   /**
    * Default constructor.  Note that this does not initialize fields
    * to their default values from the schema.  If that is desired then
    * one should use <code>newBuilder()</code>.
    */
-  public TokenResponse() {}
+  public UserDetailsRequest() {}
 
   /**
    * All-args constructor.
-   * @param isValid The new value for isValid
+   * @param token The new value for token
    */
-  public TokenResponse(java.lang.Boolean isValid) {
-    this.isValid = isValid;
+  public UserDetailsRequest(java.lang.CharSequence token) {
+    this.token = token;
   }
 
   @Override
@@ -100,7 +100,7 @@ public class TokenResponse extends org.apache.avro.specific.SpecificRecordBase i
   @Override
   public java.lang.Object get(int field$) {
     switch (field$) {
-    case 0: return isValid;
+    case 0: return token;
     default: throw new IndexOutOfBoundsException("Invalid index: " + field$);
     }
   }
@@ -110,70 +110,70 @@ public class TokenResponse extends org.apache.avro.specific.SpecificRecordBase i
   @SuppressWarnings(value="unchecked")
   public void put(int field$, java.lang.Object value$) {
     switch (field$) {
-    case 0: isValid = (java.lang.Boolean)value$; break;
+    case 0: token = (java.lang.CharSequence)value$; break;
     default: throw new IndexOutOfBoundsException("Invalid index: " + field$);
     }
   }
 
   /**
-   * Gets the value of the 'isValid' field.
-   * @return The value of the 'isValid' field.
+   * Gets the value of the 'token' field.
+   * @return The value of the 'token' field.
    */
-  public boolean getIsValid() {
-    return isValid;
+  public java.lang.CharSequence getToken() {
+    return token;
   }
 
 
   /**
-   * Sets the value of the 'isValid' field.
+   * Sets the value of the 'token' field.
    * @param value the value to set.
    */
-  public void setIsValid(boolean value) {
-    this.isValid = value;
+  public void setToken(java.lang.CharSequence value) {
+    this.token = value;
   }
 
   /**
-   * Creates a new TokenResponse RecordBuilder.
-   * @return A new TokenResponse RecordBuilder
+   * Creates a new UserDetailsRequest RecordBuilder.
+   * @return A new UserDetailsRequest RecordBuilder
    */
-  public static com.innowise.authmicroservice.avro.TokenResponse.Builder newBuilder() {
-    return new com.innowise.authmicroservice.avro.TokenResponse.Builder();
+  public static avro.UserDetailsRequest.Builder newBuilder() {
+    return new avro.UserDetailsRequest.Builder();
   }
 
   /**
-   * Creates a new TokenResponse RecordBuilder by copying an existing Builder.
+   * Creates a new UserDetailsRequest RecordBuilder by copying an existing Builder.
    * @param other The existing builder to copy.
-   * @return A new TokenResponse RecordBuilder
+   * @return A new UserDetailsRequest RecordBuilder
    */
-  public static com.innowise.authmicroservice.avro.TokenResponse.Builder newBuilder(com.innowise.authmicroservice.avro.TokenResponse.Builder other) {
+  public static avro.UserDetailsRequest.Builder newBuilder(avro.UserDetailsRequest.Builder other) {
     if (other == null) {
-      return new com.innowise.authmicroservice.avro.TokenResponse.Builder();
+      return new avro.UserDetailsRequest.Builder();
     } else {
-      return new com.innowise.authmicroservice.avro.TokenResponse.Builder(other);
+      return new avro.UserDetailsRequest.Builder(other);
     }
   }
 
   /**
-   * Creates a new TokenResponse RecordBuilder by copying an existing TokenResponse instance.
+   * Creates a new UserDetailsRequest RecordBuilder by copying an existing UserDetailsRequest instance.
    * @param other The existing instance to copy.
-   * @return A new TokenResponse RecordBuilder
+   * @return A new UserDetailsRequest RecordBuilder
    */
-  public static com.innowise.authmicroservice.avro.TokenResponse.Builder newBuilder(com.innowise.authmicroservice.avro.TokenResponse other) {
+  public static avro.UserDetailsRequest.Builder newBuilder(avro.UserDetailsRequest other) {
     if (other == null) {
-      return new com.innowise.authmicroservice.avro.TokenResponse.Builder();
+      return new avro.UserDetailsRequest.Builder();
     } else {
-      return new com.innowise.authmicroservice.avro.TokenResponse.Builder(other);
+      return new avro.UserDetailsRequest.Builder(other);
     }
   }
 
   /**
-   * RecordBuilder for TokenResponse instances.
+   * RecordBuilder for UserDetailsRequest instances.
    */
   @org.apache.avro.specific.AvroGenerated
-  public static class Builder extends org.apache.avro.specific.SpecificRecordBuilderBase<TokenResponse>
-    implements org.apache.avro.data.RecordBuilder<TokenResponse> {
+  public static class Builder extends org.apache.avro.specific.SpecificRecordBuilderBase<UserDetailsRequest>
+    implements org.apache.avro.data.RecordBuilder<UserDetailsRequest> {
 
-    private boolean isValid;
+    private java.lang.CharSequence token;
 
     /** Creates a new Builder */
     private Builder() {
@@ -184,71 +184,72 @@ public class TokenResponse extends org.apache.avro.specific.SpecificRecordBase i
      * Creates a Builder by copying an existing Builder.
      * @param other The existing Builder to copy.
      */
-    private Builder(com.innowise.authmicroservice.avro.TokenResponse.Builder other) {
+    private Builder(avro.UserDetailsRequest.Builder other) {
       super(other);
-      if (isValidValue(fields()[0], other.isValid)) {
-        this.isValid = data().deepCopy(fields()[0].schema(), other.isValid);
+      if (isValidValue(fields()[0], other.token)) {
+        this.token = data().deepCopy(fields()[0].schema(), other.token);
         fieldSetFlags()[0] = other.fieldSetFlags()[0];
       }
     }
 
     /**
-     * Creates a Builder by copying an existing TokenResponse instance
+     * Creates a Builder by copying an existing UserDetailsRequest instance
      * @param other The existing instance to copy.
      */
-    private Builder(com.innowise.authmicroservice.avro.TokenResponse other) {
+    private Builder(avro.UserDetailsRequest other) {
       super(SCHEMA$, MODEL$);
-      if (isValidValue(fields()[0], other.isValid)) {
-        this.isValid = data().deepCopy(fields()[0].schema(), other.isValid);
+      if (isValidValue(fields()[0], other.token)) {
+        this.token = data().deepCopy(fields()[0].schema(), other.token);
         fieldSetFlags()[0] = true;
       }
     }
 
     /**
-      * Gets the value of the 'isValid' field.
+      * Gets the value of the 'token' field.
       * @return The value.
       */
-    public boolean getIsValid() {
-      return isValid;
+    public java.lang.CharSequence getToken() {
+      return token;
     }
 
 
     /**
-      * Sets the value of the 'isValid' field.
-      * @param value The value of 'isValid'.
+      * Sets the value of the 'token' field.
+      * @param value The value of 'token'.
       * @return This builder.
       */
-    public com.innowise.authmicroservice.avro.TokenResponse.Builder setIsValid(boolean value) {
+    public avro.UserDetailsRequest.Builder setToken(java.lang.CharSequence value) {
       validate(fields()[0], value);
-      this.isValid = value;
+      this.token = value;
       fieldSetFlags()[0] = true;
       return this;
     }
 
     /**
-      * Checks whether the 'isValid' field has been set.
-      * @return True if the 'isValid' field has been set, false otherwise.
+      * Checks whether the 'token' field has been set.
+      * @return True if the 'token' field has been set, false otherwise.
       */
-    public boolean hasIsValid() {
+    public boolean hasToken() {
       return fieldSetFlags()[0];
     }
 
 
     /**
-      * Clears the value of the 'isValid' field.
+      * Clears the value of the 'token' field.
       * @return This builder.
       */
-    public com.innowise.authmicroservice.avro.TokenResponse.Builder clearIsValid() {
+    public avro.UserDetailsRequest.Builder clearToken() {
+      token = null;
       fieldSetFlags()[0] = false;
       return this;
     }
 
     @Override
     @SuppressWarnings("unchecked")
-    public TokenResponse build() {
+    public UserDetailsRequest build() {
       try {
-        TokenResponse record = new TokenResponse();
-        record.isValid = fieldSetFlags()[0] ? this.isValid : (java.lang.Boolean) defaultValue(fields()[0]);
+        UserDetailsRequest record = new UserDetailsRequest();
+        record.token = fieldSetFlags()[0] ? this.token : (java.lang.CharSequence) defaultValue(fields()[0]);
         return record;
       } catch (org.apache.avro.AvroMissingFieldException e) {
         throw e;
@@ -259,8 +260,8 @@ public class TokenResponse extends org.apache.avro.specific.SpecificRecordBase i
   }
 
   @SuppressWarnings("unchecked")
-  private static final org.apache.avro.io.DatumWriter<TokenResponse>
-    WRITER$ = (org.apache.avro.io.DatumWriter<TokenResponse>)MODEL$.createDatumWriter(SCHEMA$);
+  private static final org.apache.avro.io.DatumWriter<UserDetailsRequest>
+    WRITER$ = (org.apache.avro.io.DatumWriter<UserDetailsRequest>)MODEL$.createDatumWriter(SCHEMA$);
 
   @Override public void writeExternal(java.io.ObjectOutput out)
     throws java.io.IOException {
@@ -268,8 +269,8 @@ public class TokenResponse extends org.apache.avro.specific.SpecificRecordBase i
   }
 
   @SuppressWarnings("unchecked")
-  private static final org.apache.avro.io.DatumReader<TokenResponse>
-    READER$ = (org.apache.avro.io.DatumReader<TokenResponse>)MODEL$.createDatumReader(SCHEMA$);
+  private static final org.apache.avro.io.DatumReader<UserDetailsRequest>
+    READER$ = (org.apache.avro.io.DatumReader<UserDetailsRequest>)MODEL$.createDatumReader(SCHEMA$);
 
   @Override public void readExternal(java.io.ObjectInput in)
     throws java.io.IOException {
@@ -281,7 +282,7 @@ public class TokenResponse extends org.apache.avro.specific.SpecificRecordBase i
   @Override public void customEncode(org.apache.avro.io.Encoder out)
     throws java.io.IOException
   {
-    out.writeBoolean(this.isValid);
+    out.writeString(this.token);
 
   }
 
@@ -290,13 +291,13 @@ public class TokenResponse extends org.apache.avro.specific.SpecificRecordBase i
   {
     org.apache.avro.Schema.Field[] fieldOrder = in.readFieldOrderIfDiff();
     if (fieldOrder == null) {
-      this.isValid = in.readBoolean();
+      this.token = in.readString(this.token instanceof Utf8 ? (Utf8)this.token : null);
 
     } else {
       for (int i = 0; i < 1; i++) {
         switch (fieldOrder[i].pos()) {
         case 0:
-          this.isValid = in.readBoolean();
+          this.token = in.readString(this.token instanceof Utf8 ? (Utf8)this.token : null);
           break;
 
         default:

@@ -3,7 +3,7 @@
  *
  * DO NOT EDIT DIRECTLY
  */
-package com.innowise.authmicroservice.avro;
+package avro;
 
 import org.apache.avro.generic.GenericArray;
 import org.apache.avro.specific.SpecificData;
@@ -13,26 +13,26 @@ import org.apache.avro.message.BinaryMessageDecoder;
 import org.apache.avro.message.SchemaStore;
 
 @org.apache.avro.specific.AvroGenerated
-public class UserDetailsDto extends org.apache.avro.specific.SpecificRecordBase implements org.apache.avro.specific.SpecificRecord {
-  private static final long serialVersionUID = 6387789100624926489L;
+public class UserDetails extends org.apache.avro.specific.SpecificRecordBase implements org.apache.avro.specific.SpecificRecord {
+  private static final long serialVersionUID = -1009026536880185271L;
 
 
-  public static final org.apache.avro.Schema SCHEMA$ = new org.apache.avro.Schema.Parser().parse("{\"type\":\"record\",\"name\":\"UserDetailsDto\",\"namespace\":\"com.innowise.authmicroservice.avro\",\"fields\":[{\"name\":\"username\",\"type\":\"string\"},{\"name\":\"password\",\"type\":\"string\"},{\"name\":\"enabled\",\"type\":\"boolean\"},{\"name\":\"accountNonExpired\",\"type\":\"boolean\"},{\"name\":\"credentialsNonExpired\",\"type\":\"boolean\"},{\"name\":\"accountNonLocked\",\"type\":\"boolean\"},{\"name\":\"authorities\",\"type\":{\"type\":\"array\",\"items\":\"string\"}}]}");
+  public static final org.apache.avro.Schema SCHEMA$ = new org.apache.avro.Schema.Parser().parse("{\"type\":\"record\",\"name\":\"UserDetails\",\"namespace\":\"avro\",\"fields\":[{\"name\":\"id\",\"type\":\"int\"},{\"name\":\"username\",\"type\":\"string\"},{\"name\":\"password\",\"type\":\"string\"},{\"name\":\"enabled\",\"type\":\"boolean\"},{\"name\":\"accountNonExpired\",\"type\":\"boolean\"},{\"name\":\"credentialsNonExpired\",\"type\":\"boolean\"},{\"name\":\"accountNonLocked\",\"type\":\"boolean\"},{\"name\":\"authorities\",\"type\":{\"type\":\"array\",\"items\":\"string\"}}]}");
   public static org.apache.avro.Schema getClassSchema() { return SCHEMA$; }
 
   private static final SpecificData MODEL$ = new SpecificData();
 
-  private static final BinaryMessageEncoder<UserDetailsDto> ENCODER =
+  private static final BinaryMessageEncoder<UserDetails> ENCODER =
       new BinaryMessageEncoder<>(MODEL$, SCHEMA$);
 
-  private static final BinaryMessageDecoder<UserDetailsDto> DECODER =
+  private static final BinaryMessageDecoder<UserDetails> DECODER =
       new BinaryMessageDecoder<>(MODEL$, SCHEMA$);
 
   /**
    * Return the BinaryMessageEncoder instance used by this class.
    * @return the message encoder used by this class
    */
-  public static BinaryMessageEncoder<UserDetailsDto> getEncoder() {
+  public static BinaryMessageEncoder<UserDetails> getEncoder() {
     return ENCODER;
   }
 
@@ -40,7 +40,7 @@ public class UserDetailsDto extends org.apache.avro.specific.SpecificRecordBase 
    * Return the BinaryMessageDecoder instance used by this class.
    * @return the message decoder used by this class
    */
-  public static BinaryMessageDecoder<UserDetailsDto> getDecoder() {
+  public static BinaryMessageDecoder<UserDetails> getDecoder() {
     return DECODER;
   }
 
@@ -49,12 +49,12 @@ public class UserDetailsDto extends org.apache.avro.specific.SpecificRecordBase 
    * @param resolver a {@link SchemaStore} used to find schemas by fingerprint
    * @return a BinaryMessageDecoder instance for this class backed by the given SchemaStore
    */
-  public static BinaryMessageDecoder<UserDetailsDto> createDecoder(SchemaStore resolver) {
+  public static BinaryMessageDecoder<UserDetails> createDecoder(SchemaStore resolver) {
     return new BinaryMessageDecoder<>(MODEL$, SCHEMA$, resolver);
   }
 
   /**
-   * Serializes this UserDetailsDto to a ByteBuffer.
+   * Serializes this UserDetails to a ByteBuffer.
    * @return a buffer holding the serialized data for this instance
    * @throws java.io.IOException if this instance could not be serialized
    */
@@ -63,16 +63,17 @@ public class UserDetailsDto extends org.apache.avro.specific.SpecificRecordBase 
   }
 
   /**
-   * Deserializes a UserDetailsDto from a ByteBuffer.
+   * Deserializes a UserDetails from a ByteBuffer.
    * @param b a byte buffer holding serialized data for an instance of this class
-   * @return a UserDetailsDto instance decoded from the given buffer
+   * @return a UserDetails instance decoded from the given buffer
    * @throws java.io.IOException if the given bytes could not be deserialized into an instance of this class
    */
-  public static UserDetailsDto fromByteBuffer(
+  public static UserDetails fromByteBuffer(
       java.nio.ByteBuffer b) throws java.io.IOException {
     return DECODER.decode(b);
   }
 
+  private int id;
   private java.lang.CharSequence username;
   private java.lang.CharSequence password;
   private boolean enabled;
@@ -86,10 +87,11 @@ public class UserDetailsDto extends org.apache.avro.specific.SpecificRecordBase 
    * to their default values from the schema.  If that is desired then
    * one should use <code>newBuilder()</code>.
    */
-  public UserDetailsDto() {}
+  public UserDetails() {}
 
   /**
    * All-args constructor.
+   * @param id The new value for id
    * @param username The new value for username
    * @param password The new value for password
    * @param enabled The new value for enabled
@@ -98,7 +100,8 @@ public class UserDetailsDto extends org.apache.avro.specific.SpecificRecordBase 
    * @param accountNonLocked The new value for accountNonLocked
    * @param authorities The new value for authorities
    */
-  public UserDetailsDto(java.lang.CharSequence username, java.lang.CharSequence password, java.lang.Boolean enabled, java.lang.Boolean accountNonExpired, java.lang.Boolean credentialsNonExpired, java.lang.Boolean accountNonLocked, java.util.List<java.lang.CharSequence> authorities) {
+  public UserDetails(java.lang.Integer id, java.lang.CharSequence username, java.lang.CharSequence password, java.lang.Boolean enabled, java.lang.Boolean accountNonExpired, java.lang.Boolean credentialsNonExpired, java.lang.Boolean accountNonLocked, java.util.List<java.lang.CharSequence> authorities) {
+    this.id = id;
     this.username = username;
     this.password = password;
     this.enabled = enabled;
@@ -118,13 +121,14 @@ public class UserDetailsDto extends org.apache.avro.specific.SpecificRecordBase 
   @Override
   public java.lang.Object get(int field$) {
     switch (field$) {
-    case 0: return username;
-    case 1: return password;
-    case 2: return enabled;
-    case 3: return accountNonExpired;
-    case 4: return credentialsNonExpired;
-    case 5: return accountNonLocked;
-    case 6: return authorities;
+    case 0: return id;
+    case 1: return username;
+    case 2: return password;
+    case 3: return enabled;
+    case 4: return accountNonExpired;
+    case 5: return credentialsNonExpired;
+    case 6: return accountNonLocked;
+    case 7: return authorities;
     default: throw new IndexOutOfBoundsException("Invalid index: " + field$);
     }
   }
@@ -134,15 +138,33 @@ public class UserDetailsDto extends org.apache.avro.specific.SpecificRecordBase 
   @SuppressWarnings(value="unchecked")
   public void put(int field$, java.lang.Object value$) {
     switch (field$) {
-    case 0: username = (java.lang.CharSequence)value$; break;
-    case 1: password = (java.lang.CharSequence)value$; break;
-    case 2: enabled = (java.lang.Boolean)value$; break;
-    case 3: accountNonExpired = (java.lang.Boolean)value$; break;
-    case 4: credentialsNonExpired = (java.lang.Boolean)value$; break;
-    case 5: accountNonLocked = (java.lang.Boolean)value$; break;
-    case 6: authorities = (java.util.List<java.lang.CharSequence>)value$; break;
+    case 0: id = (java.lang.Integer)value$; break;
+    case 1: username = (java.lang.CharSequence)value$; break;
+    case 2: password = (java.lang.CharSequence)value$; break;
+    case 3: enabled = (java.lang.Boolean)value$; break;
+    case 4: accountNonExpired = (java.lang.Boolean)value$; break;
+    case 5: credentialsNonExpired = (java.lang.Boolean)value$; break;
+    case 6: accountNonLocked = (java.lang.Boolean)value$; break;
+    case 7: authorities = (java.util.List<java.lang.CharSequence>)value$; break;
     default: throw new IndexOutOfBoundsException("Invalid index: " + field$);
     }
+  }
+
+  /**
+   * Gets the value of the 'id' field.
+   * @return The value of the 'id' field.
+   */
+  public int getId() {
+    return id;
+  }
+
+
+  /**
+   * Sets the value of the 'id' field.
+   * @param value the value to set.
+   */
+  public void setId(int value) {
+    this.id = value;
   }
 
   /**
@@ -265,46 +287,47 @@ public class UserDetailsDto extends org.apache.avro.specific.SpecificRecordBase 
   }
 
   /**
-   * Creates a new UserDetailsDto RecordBuilder.
-   * @return A new UserDetailsDto RecordBuilder
+   * Creates a new UserDetails RecordBuilder.
+   * @return A new UserDetails RecordBuilder
    */
-  public static com.innowise.authmicroservice.avro.UserDetailsDto.Builder newBuilder() {
-    return new com.innowise.authmicroservice.avro.UserDetailsDto.Builder();
+  public static avro.UserDetails.Builder newBuilder() {
+    return new avro.UserDetails.Builder();
   }
 
   /**
-   * Creates a new UserDetailsDto RecordBuilder by copying an existing Builder.
+   * Creates a new UserDetails RecordBuilder by copying an existing Builder.
    * @param other The existing builder to copy.
-   * @return A new UserDetailsDto RecordBuilder
+   * @return A new UserDetails RecordBuilder
    */
-  public static com.innowise.authmicroservice.avro.UserDetailsDto.Builder newBuilder(com.innowise.authmicroservice.avro.UserDetailsDto.Builder other) {
+  public static avro.UserDetails.Builder newBuilder(avro.UserDetails.Builder other) {
     if (other == null) {
-      return new com.innowise.authmicroservice.avro.UserDetailsDto.Builder();
+      return new avro.UserDetails.Builder();
     } else {
-      return new com.innowise.authmicroservice.avro.UserDetailsDto.Builder(other);
+      return new avro.UserDetails.Builder(other);
     }
   }
 
   /**
-   * Creates a new UserDetailsDto RecordBuilder by copying an existing UserDetailsDto instance.
+   * Creates a new UserDetails RecordBuilder by copying an existing UserDetails instance.
    * @param other The existing instance to copy.
-   * @return A new UserDetailsDto RecordBuilder
+   * @return A new UserDetails RecordBuilder
    */
-  public static com.innowise.authmicroservice.avro.UserDetailsDto.Builder newBuilder(com.innowise.authmicroservice.avro.UserDetailsDto other) {
+  public static avro.UserDetails.Builder newBuilder(avro.UserDetails other) {
     if (other == null) {
-      return new com.innowise.authmicroservice.avro.UserDetailsDto.Builder();
+      return new avro.UserDetails.Builder();
     } else {
-      return new com.innowise.authmicroservice.avro.UserDetailsDto.Builder(other);
+      return new avro.UserDetails.Builder(other);
     }
   }
 
   /**
-   * RecordBuilder for UserDetailsDto instances.
+   * RecordBuilder for UserDetails instances.
    */
   @org.apache.avro.specific.AvroGenerated
-  public static class Builder extends org.apache.avro.specific.SpecificRecordBuilderBase<UserDetailsDto>
-    implements org.apache.avro.data.RecordBuilder<UserDetailsDto> {
+  public static class Builder extends org.apache.avro.specific.SpecificRecordBuilderBase<UserDetails>
+    implements org.apache.avro.data.RecordBuilder<UserDetails> {
 
+    private int id;
     private java.lang.CharSequence username;
     private java.lang.CharSequence password;
     private boolean enabled;
@@ -322,72 +345,119 @@ public class UserDetailsDto extends org.apache.avro.specific.SpecificRecordBase 
      * Creates a Builder by copying an existing Builder.
      * @param other The existing Builder to copy.
      */
-    private Builder(com.innowise.authmicroservice.avro.UserDetailsDto.Builder other) {
+    private Builder(avro.UserDetails.Builder other) {
       super(other);
-      if (isValidValue(fields()[0], other.username)) {
-        this.username = data().deepCopy(fields()[0].schema(), other.username);
+      if (isValidValue(fields()[0], other.id)) {
+        this.id = data().deepCopy(fields()[0].schema(), other.id);
         fieldSetFlags()[0] = other.fieldSetFlags()[0];
       }
-      if (isValidValue(fields()[1], other.password)) {
-        this.password = data().deepCopy(fields()[1].schema(), other.password);
+      if (isValidValue(fields()[1], other.username)) {
+        this.username = data().deepCopy(fields()[1].schema(), other.username);
         fieldSetFlags()[1] = other.fieldSetFlags()[1];
       }
-      if (isValidValue(fields()[2], other.enabled)) {
-        this.enabled = data().deepCopy(fields()[2].schema(), other.enabled);
+      if (isValidValue(fields()[2], other.password)) {
+        this.password = data().deepCopy(fields()[2].schema(), other.password);
         fieldSetFlags()[2] = other.fieldSetFlags()[2];
       }
-      if (isValidValue(fields()[3], other.accountNonExpired)) {
-        this.accountNonExpired = data().deepCopy(fields()[3].schema(), other.accountNonExpired);
+      if (isValidValue(fields()[3], other.enabled)) {
+        this.enabled = data().deepCopy(fields()[3].schema(), other.enabled);
         fieldSetFlags()[3] = other.fieldSetFlags()[3];
       }
-      if (isValidValue(fields()[4], other.credentialsNonExpired)) {
-        this.credentialsNonExpired = data().deepCopy(fields()[4].schema(), other.credentialsNonExpired);
+      if (isValidValue(fields()[4], other.accountNonExpired)) {
+        this.accountNonExpired = data().deepCopy(fields()[4].schema(), other.accountNonExpired);
         fieldSetFlags()[4] = other.fieldSetFlags()[4];
       }
-      if (isValidValue(fields()[5], other.accountNonLocked)) {
-        this.accountNonLocked = data().deepCopy(fields()[5].schema(), other.accountNonLocked);
+      if (isValidValue(fields()[5], other.credentialsNonExpired)) {
+        this.credentialsNonExpired = data().deepCopy(fields()[5].schema(), other.credentialsNonExpired);
         fieldSetFlags()[5] = other.fieldSetFlags()[5];
       }
-      if (isValidValue(fields()[6], other.authorities)) {
-        this.authorities = data().deepCopy(fields()[6].schema(), other.authorities);
+      if (isValidValue(fields()[6], other.accountNonLocked)) {
+        this.accountNonLocked = data().deepCopy(fields()[6].schema(), other.accountNonLocked);
         fieldSetFlags()[6] = other.fieldSetFlags()[6];
+      }
+      if (isValidValue(fields()[7], other.authorities)) {
+        this.authorities = data().deepCopy(fields()[7].schema(), other.authorities);
+        fieldSetFlags()[7] = other.fieldSetFlags()[7];
       }
     }
 
     /**
-     * Creates a Builder by copying an existing UserDetailsDto instance
+     * Creates a Builder by copying an existing UserDetails instance
      * @param other The existing instance to copy.
      */
-    private Builder(com.innowise.authmicroservice.avro.UserDetailsDto other) {
+    private Builder(avro.UserDetails other) {
       super(SCHEMA$, MODEL$);
-      if (isValidValue(fields()[0], other.username)) {
-        this.username = data().deepCopy(fields()[0].schema(), other.username);
+      if (isValidValue(fields()[0], other.id)) {
+        this.id = data().deepCopy(fields()[0].schema(), other.id);
         fieldSetFlags()[0] = true;
       }
-      if (isValidValue(fields()[1], other.password)) {
-        this.password = data().deepCopy(fields()[1].schema(), other.password);
+      if (isValidValue(fields()[1], other.username)) {
+        this.username = data().deepCopy(fields()[1].schema(), other.username);
         fieldSetFlags()[1] = true;
       }
-      if (isValidValue(fields()[2], other.enabled)) {
-        this.enabled = data().deepCopy(fields()[2].schema(), other.enabled);
+      if (isValidValue(fields()[2], other.password)) {
+        this.password = data().deepCopy(fields()[2].schema(), other.password);
         fieldSetFlags()[2] = true;
       }
-      if (isValidValue(fields()[3], other.accountNonExpired)) {
-        this.accountNonExpired = data().deepCopy(fields()[3].schema(), other.accountNonExpired);
+      if (isValidValue(fields()[3], other.enabled)) {
+        this.enabled = data().deepCopy(fields()[3].schema(), other.enabled);
         fieldSetFlags()[3] = true;
       }
-      if (isValidValue(fields()[4], other.credentialsNonExpired)) {
-        this.credentialsNonExpired = data().deepCopy(fields()[4].schema(), other.credentialsNonExpired);
+      if (isValidValue(fields()[4], other.accountNonExpired)) {
+        this.accountNonExpired = data().deepCopy(fields()[4].schema(), other.accountNonExpired);
         fieldSetFlags()[4] = true;
       }
-      if (isValidValue(fields()[5], other.accountNonLocked)) {
-        this.accountNonLocked = data().deepCopy(fields()[5].schema(), other.accountNonLocked);
+      if (isValidValue(fields()[5], other.credentialsNonExpired)) {
+        this.credentialsNonExpired = data().deepCopy(fields()[5].schema(), other.credentialsNonExpired);
         fieldSetFlags()[5] = true;
       }
-      if (isValidValue(fields()[6], other.authorities)) {
-        this.authorities = data().deepCopy(fields()[6].schema(), other.authorities);
+      if (isValidValue(fields()[6], other.accountNonLocked)) {
+        this.accountNonLocked = data().deepCopy(fields()[6].schema(), other.accountNonLocked);
         fieldSetFlags()[6] = true;
       }
+      if (isValidValue(fields()[7], other.authorities)) {
+        this.authorities = data().deepCopy(fields()[7].schema(), other.authorities);
+        fieldSetFlags()[7] = true;
+      }
+    }
+
+    /**
+      * Gets the value of the 'id' field.
+      * @return The value.
+      */
+    public int getId() {
+      return id;
+    }
+
+
+    /**
+      * Sets the value of the 'id' field.
+      * @param value The value of 'id'.
+      * @return This builder.
+      */
+    public avro.UserDetails.Builder setId(int value) {
+      validate(fields()[0], value);
+      this.id = value;
+      fieldSetFlags()[0] = true;
+      return this;
+    }
+
+    /**
+      * Checks whether the 'id' field has been set.
+      * @return True if the 'id' field has been set, false otherwise.
+      */
+    public boolean hasId() {
+      return fieldSetFlags()[0];
+    }
+
+
+    /**
+      * Clears the value of the 'id' field.
+      * @return This builder.
+      */
+    public avro.UserDetails.Builder clearId() {
+      fieldSetFlags()[0] = false;
+      return this;
     }
 
     /**
@@ -404,10 +474,10 @@ public class UserDetailsDto extends org.apache.avro.specific.SpecificRecordBase 
       * @param value The value of 'username'.
       * @return This builder.
       */
-    public com.innowise.authmicroservice.avro.UserDetailsDto.Builder setUsername(java.lang.CharSequence value) {
-      validate(fields()[0], value);
+    public avro.UserDetails.Builder setUsername(java.lang.CharSequence value) {
+      validate(fields()[1], value);
       this.username = value;
-      fieldSetFlags()[0] = true;
+      fieldSetFlags()[1] = true;
       return this;
     }
 
@@ -416,7 +486,7 @@ public class UserDetailsDto extends org.apache.avro.specific.SpecificRecordBase 
       * @return True if the 'username' field has been set, false otherwise.
       */
     public boolean hasUsername() {
-      return fieldSetFlags()[0];
+      return fieldSetFlags()[1];
     }
 
 
@@ -424,9 +494,9 @@ public class UserDetailsDto extends org.apache.avro.specific.SpecificRecordBase 
       * Clears the value of the 'username' field.
       * @return This builder.
       */
-    public com.innowise.authmicroservice.avro.UserDetailsDto.Builder clearUsername() {
+    public avro.UserDetails.Builder clearUsername() {
       username = null;
-      fieldSetFlags()[0] = false;
+      fieldSetFlags()[1] = false;
       return this;
     }
 
@@ -444,10 +514,10 @@ public class UserDetailsDto extends org.apache.avro.specific.SpecificRecordBase 
       * @param value The value of 'password'.
       * @return This builder.
       */
-    public com.innowise.authmicroservice.avro.UserDetailsDto.Builder setPassword(java.lang.CharSequence value) {
-      validate(fields()[1], value);
+    public avro.UserDetails.Builder setPassword(java.lang.CharSequence value) {
+      validate(fields()[2], value);
       this.password = value;
-      fieldSetFlags()[1] = true;
+      fieldSetFlags()[2] = true;
       return this;
     }
 
@@ -456,7 +526,7 @@ public class UserDetailsDto extends org.apache.avro.specific.SpecificRecordBase 
       * @return True if the 'password' field has been set, false otherwise.
       */
     public boolean hasPassword() {
-      return fieldSetFlags()[1];
+      return fieldSetFlags()[2];
     }
 
 
@@ -464,9 +534,9 @@ public class UserDetailsDto extends org.apache.avro.specific.SpecificRecordBase 
       * Clears the value of the 'password' field.
       * @return This builder.
       */
-    public com.innowise.authmicroservice.avro.UserDetailsDto.Builder clearPassword() {
+    public avro.UserDetails.Builder clearPassword() {
       password = null;
-      fieldSetFlags()[1] = false;
+      fieldSetFlags()[2] = false;
       return this;
     }
 
@@ -484,10 +554,10 @@ public class UserDetailsDto extends org.apache.avro.specific.SpecificRecordBase 
       * @param value The value of 'enabled'.
       * @return This builder.
       */
-    public com.innowise.authmicroservice.avro.UserDetailsDto.Builder setEnabled(boolean value) {
-      validate(fields()[2], value);
+    public avro.UserDetails.Builder setEnabled(boolean value) {
+      validate(fields()[3], value);
       this.enabled = value;
-      fieldSetFlags()[2] = true;
+      fieldSetFlags()[3] = true;
       return this;
     }
 
@@ -496,7 +566,7 @@ public class UserDetailsDto extends org.apache.avro.specific.SpecificRecordBase 
       * @return True if the 'enabled' field has been set, false otherwise.
       */
     public boolean hasEnabled() {
-      return fieldSetFlags()[2];
+      return fieldSetFlags()[3];
     }
 
 
@@ -504,8 +574,8 @@ public class UserDetailsDto extends org.apache.avro.specific.SpecificRecordBase 
       * Clears the value of the 'enabled' field.
       * @return This builder.
       */
-    public com.innowise.authmicroservice.avro.UserDetailsDto.Builder clearEnabled() {
-      fieldSetFlags()[2] = false;
+    public avro.UserDetails.Builder clearEnabled() {
+      fieldSetFlags()[3] = false;
       return this;
     }
 
@@ -523,10 +593,10 @@ public class UserDetailsDto extends org.apache.avro.specific.SpecificRecordBase 
       * @param value The value of 'accountNonExpired'.
       * @return This builder.
       */
-    public com.innowise.authmicroservice.avro.UserDetailsDto.Builder setAccountNonExpired(boolean value) {
-      validate(fields()[3], value);
+    public avro.UserDetails.Builder setAccountNonExpired(boolean value) {
+      validate(fields()[4], value);
       this.accountNonExpired = value;
-      fieldSetFlags()[3] = true;
+      fieldSetFlags()[4] = true;
       return this;
     }
 
@@ -535,7 +605,7 @@ public class UserDetailsDto extends org.apache.avro.specific.SpecificRecordBase 
       * @return True if the 'accountNonExpired' field has been set, false otherwise.
       */
     public boolean hasAccountNonExpired() {
-      return fieldSetFlags()[3];
+      return fieldSetFlags()[4];
     }
 
 
@@ -543,8 +613,8 @@ public class UserDetailsDto extends org.apache.avro.specific.SpecificRecordBase 
       * Clears the value of the 'accountNonExpired' field.
       * @return This builder.
       */
-    public com.innowise.authmicroservice.avro.UserDetailsDto.Builder clearAccountNonExpired() {
-      fieldSetFlags()[3] = false;
+    public avro.UserDetails.Builder clearAccountNonExpired() {
+      fieldSetFlags()[4] = false;
       return this;
     }
 
@@ -562,10 +632,10 @@ public class UserDetailsDto extends org.apache.avro.specific.SpecificRecordBase 
       * @param value The value of 'credentialsNonExpired'.
       * @return This builder.
       */
-    public com.innowise.authmicroservice.avro.UserDetailsDto.Builder setCredentialsNonExpired(boolean value) {
-      validate(fields()[4], value);
+    public avro.UserDetails.Builder setCredentialsNonExpired(boolean value) {
+      validate(fields()[5], value);
       this.credentialsNonExpired = value;
-      fieldSetFlags()[4] = true;
+      fieldSetFlags()[5] = true;
       return this;
     }
 
@@ -574,7 +644,7 @@ public class UserDetailsDto extends org.apache.avro.specific.SpecificRecordBase 
       * @return True if the 'credentialsNonExpired' field has been set, false otherwise.
       */
     public boolean hasCredentialsNonExpired() {
-      return fieldSetFlags()[4];
+      return fieldSetFlags()[5];
     }
 
 
@@ -582,8 +652,8 @@ public class UserDetailsDto extends org.apache.avro.specific.SpecificRecordBase 
       * Clears the value of the 'credentialsNonExpired' field.
       * @return This builder.
       */
-    public com.innowise.authmicroservice.avro.UserDetailsDto.Builder clearCredentialsNonExpired() {
-      fieldSetFlags()[4] = false;
+    public avro.UserDetails.Builder clearCredentialsNonExpired() {
+      fieldSetFlags()[5] = false;
       return this;
     }
 
@@ -601,10 +671,10 @@ public class UserDetailsDto extends org.apache.avro.specific.SpecificRecordBase 
       * @param value The value of 'accountNonLocked'.
       * @return This builder.
       */
-    public com.innowise.authmicroservice.avro.UserDetailsDto.Builder setAccountNonLocked(boolean value) {
-      validate(fields()[5], value);
+    public avro.UserDetails.Builder setAccountNonLocked(boolean value) {
+      validate(fields()[6], value);
       this.accountNonLocked = value;
-      fieldSetFlags()[5] = true;
+      fieldSetFlags()[6] = true;
       return this;
     }
 
@@ -613,7 +683,7 @@ public class UserDetailsDto extends org.apache.avro.specific.SpecificRecordBase 
       * @return True if the 'accountNonLocked' field has been set, false otherwise.
       */
     public boolean hasAccountNonLocked() {
-      return fieldSetFlags()[5];
+      return fieldSetFlags()[6];
     }
 
 
@@ -621,8 +691,8 @@ public class UserDetailsDto extends org.apache.avro.specific.SpecificRecordBase 
       * Clears the value of the 'accountNonLocked' field.
       * @return This builder.
       */
-    public com.innowise.authmicroservice.avro.UserDetailsDto.Builder clearAccountNonLocked() {
-      fieldSetFlags()[5] = false;
+    public avro.UserDetails.Builder clearAccountNonLocked() {
+      fieldSetFlags()[6] = false;
       return this;
     }
 
@@ -640,10 +710,10 @@ public class UserDetailsDto extends org.apache.avro.specific.SpecificRecordBase 
       * @param value The value of 'authorities'.
       * @return This builder.
       */
-    public com.innowise.authmicroservice.avro.UserDetailsDto.Builder setAuthorities(java.util.List<java.lang.CharSequence> value) {
-      validate(fields()[6], value);
+    public avro.UserDetails.Builder setAuthorities(java.util.List<java.lang.CharSequence> value) {
+      validate(fields()[7], value);
       this.authorities = value;
-      fieldSetFlags()[6] = true;
+      fieldSetFlags()[7] = true;
       return this;
     }
 
@@ -652,7 +722,7 @@ public class UserDetailsDto extends org.apache.avro.specific.SpecificRecordBase 
       * @return True if the 'authorities' field has been set, false otherwise.
       */
     public boolean hasAuthorities() {
-      return fieldSetFlags()[6];
+      return fieldSetFlags()[7];
     }
 
 
@@ -660,24 +730,25 @@ public class UserDetailsDto extends org.apache.avro.specific.SpecificRecordBase 
       * Clears the value of the 'authorities' field.
       * @return This builder.
       */
-    public com.innowise.authmicroservice.avro.UserDetailsDto.Builder clearAuthorities() {
+    public avro.UserDetails.Builder clearAuthorities() {
       authorities = null;
-      fieldSetFlags()[6] = false;
+      fieldSetFlags()[7] = false;
       return this;
     }
 
     @Override
     @SuppressWarnings("unchecked")
-    public UserDetailsDto build() {
+    public UserDetails build() {
       try {
-        UserDetailsDto record = new UserDetailsDto();
-        record.username = fieldSetFlags()[0] ? this.username : (java.lang.CharSequence) defaultValue(fields()[0]);
-        record.password = fieldSetFlags()[1] ? this.password : (java.lang.CharSequence) defaultValue(fields()[1]);
-        record.enabled = fieldSetFlags()[2] ? this.enabled : (java.lang.Boolean) defaultValue(fields()[2]);
-        record.accountNonExpired = fieldSetFlags()[3] ? this.accountNonExpired : (java.lang.Boolean) defaultValue(fields()[3]);
-        record.credentialsNonExpired = fieldSetFlags()[4] ? this.credentialsNonExpired : (java.lang.Boolean) defaultValue(fields()[4]);
-        record.accountNonLocked = fieldSetFlags()[5] ? this.accountNonLocked : (java.lang.Boolean) defaultValue(fields()[5]);
-        record.authorities = fieldSetFlags()[6] ? this.authorities : (java.util.List<java.lang.CharSequence>) defaultValue(fields()[6]);
+        UserDetails record = new UserDetails();
+        record.id = fieldSetFlags()[0] ? this.id : (java.lang.Integer) defaultValue(fields()[0]);
+        record.username = fieldSetFlags()[1] ? this.username : (java.lang.CharSequence) defaultValue(fields()[1]);
+        record.password = fieldSetFlags()[2] ? this.password : (java.lang.CharSequence) defaultValue(fields()[2]);
+        record.enabled = fieldSetFlags()[3] ? this.enabled : (java.lang.Boolean) defaultValue(fields()[3]);
+        record.accountNonExpired = fieldSetFlags()[4] ? this.accountNonExpired : (java.lang.Boolean) defaultValue(fields()[4]);
+        record.credentialsNonExpired = fieldSetFlags()[5] ? this.credentialsNonExpired : (java.lang.Boolean) defaultValue(fields()[5]);
+        record.accountNonLocked = fieldSetFlags()[6] ? this.accountNonLocked : (java.lang.Boolean) defaultValue(fields()[6]);
+        record.authorities = fieldSetFlags()[7] ? this.authorities : (java.util.List<java.lang.CharSequence>) defaultValue(fields()[7]);
         return record;
       } catch (org.apache.avro.AvroMissingFieldException e) {
         throw e;
@@ -688,8 +759,8 @@ public class UserDetailsDto extends org.apache.avro.specific.SpecificRecordBase 
   }
 
   @SuppressWarnings("unchecked")
-  private static final org.apache.avro.io.DatumWriter<UserDetailsDto>
-    WRITER$ = (org.apache.avro.io.DatumWriter<UserDetailsDto>)MODEL$.createDatumWriter(SCHEMA$);
+  private static final org.apache.avro.io.DatumWriter<UserDetails>
+    WRITER$ = (org.apache.avro.io.DatumWriter<UserDetails>)MODEL$.createDatumWriter(SCHEMA$);
 
   @Override public void writeExternal(java.io.ObjectOutput out)
     throws java.io.IOException {
@@ -697,8 +768,8 @@ public class UserDetailsDto extends org.apache.avro.specific.SpecificRecordBase 
   }
 
   @SuppressWarnings("unchecked")
-  private static final org.apache.avro.io.DatumReader<UserDetailsDto>
-    READER$ = (org.apache.avro.io.DatumReader<UserDetailsDto>)MODEL$.createDatumReader(SCHEMA$);
+  private static final org.apache.avro.io.DatumReader<UserDetails>
+    READER$ = (org.apache.avro.io.DatumReader<UserDetails>)MODEL$.createDatumReader(SCHEMA$);
 
   @Override public void readExternal(java.io.ObjectInput in)
     throws java.io.IOException {
@@ -710,6 +781,8 @@ public class UserDetailsDto extends org.apache.avro.specific.SpecificRecordBase 
   @Override public void customEncode(org.apache.avro.io.Encoder out)
     throws java.io.IOException
   {
+    out.writeInt(this.id);
+
     out.writeString(this.username);
 
     out.writeString(this.password);
@@ -742,6 +815,8 @@ public class UserDetailsDto extends org.apache.avro.specific.SpecificRecordBase 
   {
     org.apache.avro.Schema.Field[] fieldOrder = in.readFieldOrderIfDiff();
     if (fieldOrder == null) {
+      this.id = in.readInt();
+
       this.username = in.readString(this.username instanceof Utf8 ? (Utf8)this.username : null);
 
       this.password = in.readString(this.password instanceof Utf8 ? (Utf8)this.password : null);
@@ -770,33 +845,37 @@ public class UserDetailsDto extends org.apache.avro.specific.SpecificRecordBase 
       }
 
     } else {
-      for (int i = 0; i < 7; i++) {
+      for (int i = 0; i < 8; i++) {
         switch (fieldOrder[i].pos()) {
         case 0:
-          this.username = in.readString(this.username instanceof Utf8 ? (Utf8)this.username : null);
+          this.id = in.readInt();
           break;
 
         case 1:
-          this.password = in.readString(this.password instanceof Utf8 ? (Utf8)this.password : null);
+          this.username = in.readString(this.username instanceof Utf8 ? (Utf8)this.username : null);
           break;
 
         case 2:
-          this.enabled = in.readBoolean();
+          this.password = in.readString(this.password instanceof Utf8 ? (Utf8)this.password : null);
           break;
 
         case 3:
-          this.accountNonExpired = in.readBoolean();
+          this.enabled = in.readBoolean();
           break;
 
         case 4:
-          this.credentialsNonExpired = in.readBoolean();
+          this.accountNonExpired = in.readBoolean();
           break;
 
         case 5:
-          this.accountNonLocked = in.readBoolean();
+          this.credentialsNonExpired = in.readBoolean();
           break;
 
         case 6:
+          this.accountNonLocked = in.readBoolean();
+          break;
+
+        case 7:
           long size0 = in.readArrayStart();
           java.util.List<java.lang.CharSequence> a0 = this.authorities;
           if (a0 == null) {

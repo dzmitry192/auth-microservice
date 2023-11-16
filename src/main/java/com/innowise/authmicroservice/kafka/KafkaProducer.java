@@ -1,7 +1,6 @@
 package com.innowise.authmicroservice.kafka;
 
-import com.innowise.authmicroservice.avro.TokenResponse;
-import com.innowise.authmicroservice.avro.UserDetailsDto;
+import avro.UserDetailsResponse;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
@@ -12,21 +11,14 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class KafkaProducer {
 
-    @Value(value = "${kafka.topics.user_details}")
-    private String topicUserDetails;
-    @Value(value = "${kafka.topics.token_response}")
-    private String topicTokenResponse;
+    @Value(value = "${kafka.topics.user_details_response}")
+    private String topicUserDetailsResponse;
 
     @NonNull
     private KafkaTemplate<String, Object> kafkaTemplate;
 
-    public void sendTokenResponse(TokenResponse tokenResponse) {
-        kafkaTemplate.send(topicTokenResponse, tokenResponse);
+    public void sendUserDetailsResponse(UserDetailsResponse userDetailsResponse) {
+        kafkaTemplate.send(topicUserDetailsResponse, userDetailsResponse);
         System.out.println("Token response was sent!");
-    }
-
-    public void sendUserDetails(UserDetailsDto userDetailsDto) {
-        kafkaTemplate.send(topicUserDetails, userDetailsDto);
-        System.out.println("User details was sent!");
     }
 }
