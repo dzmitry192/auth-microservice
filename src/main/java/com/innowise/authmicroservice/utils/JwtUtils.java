@@ -2,16 +2,20 @@ package com.innowise.authmicroservice.utils;
 
 import com.innowise.authmicroservice.entity.ClientEntity;
 import com.innowise.authmicroservice.entity.RefreshTokenEntity;
+import com.innowise.authmicroservice.repository.ClientRepository;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.SignatureException;
 import lombok.Data;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
+import org.apache.avro.util.Utf8;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
+import java.nio.charset.StandardCharsets;
 import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
@@ -27,25 +31,33 @@ public class JwtUtils {
     private String jwtAccessSecret;
     @Value("${jwt.secret.refresh}")
     private String jwtRefreshSecret;
+    @NonNull
+    private ClientRepository clientRepository;
 
     public String generateAccessToken(@NonNull ClientEntity client) {
         final LocalDateTime now = LocalDateTime.now();
         final Instant accessExpirationInstant = now.plusMinutes(5).atZone(ZoneId.systemDefault()).toInstant();
         final Date accessExpiration = Date.from(accessExpirationInstant);
+
         return Jwts.builder()
-                .setSubject(client.getEmail())
-                .setExpiration(accessExpiration)
-                .signWith(SignatureAlgorithm.HS384, jwtAccessSecret.getBytes())
-                .claim("roles", client.getRole())
+                .subject(client.getEmail())
+                .claim("roles", client.getRole().name())
+                .expiration(accessExpiration)
+                .signWith(SignatureAlgorithm.HS256, jwtAccessSecret.getBytes(StandardCharsets.UTF_8))
                 .compact();
     }
 
-    public String getSubject(String token, String secret) {
-        return Jwts.parserBuilder()
-                .setSigningKey(secret.getBytes())
+    public String getSubject(String accessToken) {
+        return Jwts.parser()
+                .setSigningKey(jwtAccessSecret.getBytes(StandardCharsets.UTF_8))
                 .build()
-                .parseClaimsJws(token)
-                .getBody().getSubject();
+                .parseClaimsJws(accessToken)
+                .getPayload()
+                .getSubject();
+    }
+
+    public ClientEntity getClientFromToken(String token) {
+        return clientRepository.findByEmail(getSubject(token));
     }
 
     public RefreshTokenEntity generateRefreshToken(@NonNull ClientEntity client) {
@@ -54,9 +66,9 @@ public class JwtUtils {
         final Date refreshExpiration = Date.from(refreshExpirationInstant);
 
         String refreshToken = Jwts.builder()
-                .setSubject(client.getEmail())
-                .setExpiration(refreshExpiration)
-                .signWith(SignatureAlgorithm.HS384, jwtRefreshSecret.getBytes())
+                .subject(client.getEmail())
+                .expiration(refreshExpiration)
+                .signWith(SignatureAlgorithm.HS256, jwtRefreshSecret.getBytes(StandardCharsets.UTF_8))
                 .compact();
 
         return new RefreshTokenEntity(refreshToken, refreshExpiration, client.getId());
@@ -72,10 +84,11 @@ public class JwtUtils {
 
     private boolean validateToken(String token, @NonNull String secret) {
         try {
-            Jwts.parserBuilder()
-                    .setSigningKey(secret.getBytes())
+            Jwts.parser()
+                    .setSigningKey(secret.getBytes(StandardCharsets.UTF_8))
                     .build()
                     .parseClaimsJws(token);
+
             return true;
         } catch (ExpiredJwtException expEx) {
             logger.error("Token expired", expEx);
@@ -84,7 +97,7 @@ public class JwtUtils {
         } catch (MalformedJwtException mjEx) {
             logger.error("Malformed jwt", mjEx);
         } catch (SignatureException e) {
-            logger.error("JWT signature does not match locally computed signature", e);
+            logger.error("SignatureException", e);
         } catch (IllegalArgumentException e) {
             logger.error("IllegalArgumentException", e);
         } catch (Exception e) {
@@ -103,10 +116,10 @@ public class JwtUtils {
     }
 
     private Claims getClaims(String token, @NonNull String secret) {
-        return Jwts.parserBuilder()
+        return Jwts.parser()
                 .setSigningKey(secret.getBytes())
                 .build()
                 .parseClaimsJws(token)
-                .getBody();
+                .getPayload();
     }
 }

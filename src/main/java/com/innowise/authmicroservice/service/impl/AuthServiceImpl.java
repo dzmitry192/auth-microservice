@@ -62,17 +62,17 @@ public class AuthServiceImpl implements AuthService {
 
     @Override
     public SignupAndRefreshTokenResponse refresh(RefreshTokenRequest refreshTokenRequest) throws Exception {
-        RefreshTokenEntity refreshToken = refreshTokenRepository.findByToken(refreshTokenRequest.getRefreshToken());
-        if (refreshToken == null || !jwtUtils.validateRefreshToken(refreshToken.getToken())) {
-            throw new Exception("There is no refresh token in database!");
-        } else {
+        if (jwtUtils.validateRefreshToken(refreshTokenRequest.getRefreshToken())) {
+            RefreshTokenEntity refreshToken = refreshTokenRepository.findByToken(refreshTokenRequest.getRefreshToken());
             Optional<ClientEntity> client = clientRepository.findById(refreshToken.getClientId());
             if (client.isPresent()) {
                 String accessToken = jwtUtils.generateAccessToken(client.get());
                 return new SignupAndRefreshTokenResponse(accessToken, refreshToken.getToken());
             } else {
-                throw new UsernameNotFoundException("User Not Found!");
+                throw new UsernameNotFoundException("User Not Found");
             }
+        } else {
+            throw new Exception("Token is not valid");
         }
     }
 }

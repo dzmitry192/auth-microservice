@@ -1,0 +1,11 @@
+{
+  "type": "record",
+  "name": "UserDetailsRequest",
+  "namespace": "avro",
+  "fields": [
+    {
+      "name": "token",
+      "type": "string"
+    }
+  ]
+}
