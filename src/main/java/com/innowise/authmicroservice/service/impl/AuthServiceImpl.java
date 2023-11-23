@@ -14,6 +14,7 @@ import com.innowise.authmicroservice.service.AuthService;
 import com.innowise.authmicroservice.utils.JwtUtils;
 import lombok.AllArgsConstructor;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -24,6 +25,7 @@ public class AuthServiceImpl implements AuthService {
     private final JwtUtils jwtUtils;
     private final ClientRepository clientRepository;
     private final RefreshTokenRepository refreshTokenRepository;
+    private final PasswordEncoder passwordEncoder;
 
     @Override
     public LoginResponse login(LoginRequest login) {
@@ -44,7 +46,7 @@ public class AuthServiceImpl implements AuthService {
         ClientEntity client = new ClientEntity(signup.getFirstName(),
                 signup.getLastName(),
                 signup.getEmail(),
-                signup.getPassword(),
+                passwordEncoder.encode(signup.getPassword()),
                 signup.getPhoneNumber(),
                 signup.getAddress(),
                 Role.ROLE_USER);

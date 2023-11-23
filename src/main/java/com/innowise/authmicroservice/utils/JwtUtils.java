@@ -5,6 +5,7 @@ import com.innowise.authmicroservice.entity.RefreshTokenEntity;
 import com.innowise.authmicroservice.repository.ClientRepository;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.SignatureException;
+import lombok.Data;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import org.apache.avro.util.Utf8;
@@ -18,9 +19,11 @@ import java.nio.charset.StandardCharsets;
 import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
+import java.util.Base64;
 import java.util.Date;
 
 @Component
+@Data
 @RequiredArgsConstructor
 public class JwtUtils {
     private static final Logger logger = LoggerFactory.getLogger(JwtUtils.class);
@@ -100,6 +103,7 @@ public class JwtUtils {
         } catch (Exception e) {
             logger.error("invalid token", e);
         }
+
         return false;
     }
 
