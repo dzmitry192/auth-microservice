@@ -19,6 +19,5 @@ public class KafkaProducer {
 
     public void sendUserDetailsResponse(UserDetailsResponse userDetailsResponse) {
         kafkaTemplate.send(topicUserDetailsResponse, userDetailsResponse);
-        System.out.println("Token response was sent!");
     }
 }

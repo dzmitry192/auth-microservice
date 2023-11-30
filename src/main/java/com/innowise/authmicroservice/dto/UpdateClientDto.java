@@ -1,4 +1,4 @@
-package com.innowise.authmicroservice.payload.request;
+package com.innowise.authmicroservice.dto;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
@@ -10,11 +10,15 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class LoginRequest {
+public class UpdateClientDto {
+    @Size(min = 2, max = 20)
+    private String firstName;
+    @Size(min = 2, max = 30)
+    private String lastName;
     @Email
-    @NotBlank(message = "Email can't be empty")
     private String email;
     @Size(min = 4)
-    @NotBlank(message = "Password can't be empty")
     private String password;
+    private String phoneNumber;
+    private String address;
 }

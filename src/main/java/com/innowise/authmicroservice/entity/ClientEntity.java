@@ -9,6 +9,7 @@ import lombok.*;
 @Entity
 @Table(name = "clients")
 @NoArgsConstructor
+@AllArgsConstructor
 @RequiredArgsConstructor
 public class ClientEntity {
     @Id

@@ -1,15 +1,27 @@
-package com.innowise.authmicroservice.payload.request;
+package com.innowise.authmicroservice.dto;
 
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
-public class SignupRequest {
+@NoArgsConstructor
+@AllArgsConstructor
+public class ClientDto {
+    @NotNull(message = "Id can't be empty")
+    private Long id;
     @NotBlank(message = "First name can't be empty")
+    @Size(min = 2, max = 20)
     private String firstName;
     @NotBlank(message = "Last name can't be empty")
+    @Size(min = 2, max = 30)
     private String lastName;
     @Email
     @NotBlank(message = "Email can't be empty")
