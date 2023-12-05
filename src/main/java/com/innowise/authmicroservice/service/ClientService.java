@@ -11,5 +11,5 @@ public interface ClientService {
     List<ClientDto> getClients(Integer offset, Integer limit);
     ClientDto getClientById(Long clientId) throws NotFoundException;
     ClientDto updateClientById(Long clientId, UpdateClientDto updateClientDto) throws NotFoundException;
-    String deleteClientById(Long clientId) throws NotFoundException, BadRequestException;
+    String deleteClientById(Long clientId) throws NotFoundException, BadRequestException, InterruptedException;
 }

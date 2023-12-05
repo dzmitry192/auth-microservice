@@ -163,11 +163,14 @@
                     <schemas/>
                     <subjects>
                         <UserDetailsResponse>src/main/resources/avro/UserDetailsResponse.avsc</UserDetailsResponse>
+                        <DeleteClientRequest>src/main/resources/avro/DeleteClientRequest.avsc</DeleteClientRequest>
                     </subjects>
                     <outputDirectory>src/main/resources/avro</outputDirectory>
                     <subjectPatterns>
                         <param>^UserDetailsRequest$</param>
                         <param>^UserDetailsResponse$</param>
+                        <param>^DeleteClientRequest</param>
+                        <param>^DeleteClientResponse</param>
                     </subjectPatterns>
                 </configuration>
 

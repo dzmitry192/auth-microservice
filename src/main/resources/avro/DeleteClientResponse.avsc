@@ -1,0 +1,1 @@
+{"type":"record","name":"DeleteClientResponse","namespace":"avro","fields":[{"name":"isDeleted","type":"boolean"}]}

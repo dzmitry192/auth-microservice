@@ -1,0 +1,1 @@
+{"type":"record","name":"DeleteClientRequest","namespace":"avro","fields":[{"name":"clientId","type":"long"}]}

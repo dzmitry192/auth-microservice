@@ -1,17 +1,20 @@
 package com.innowise.authmicroservice.service.impl;
 
+import avro.DeleteClientRequest;
 import com.innowise.authmicroservice.dto.ClientDto;
 import com.innowise.authmicroservice.dto.UpdateClientDto;
 import com.innowise.authmicroservice.entity.ClientEntity;
 import com.innowise.authmicroservice.exception.BadRequestException;
 import com.innowise.authmicroservice.exception.NotFoundException;
+import com.innowise.authmicroservice.kafka.KafkaListeners;
+import com.innowise.authmicroservice.kafka.KafkaProducer;
 import com.innowise.authmicroservice.mapper.ClientMapperImpl;
 import com.innowise.authmicroservice.repository.ClientRepository;
 import com.innowise.authmicroservice.service.ClientService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.http.ResponseEntity;
+import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
@@ -23,9 +26,8 @@ import java.util.Optional;
 public class ClientServiceImpl implements ClientService {
 
     private final ClientRepository clientRepository;
-    private final RestTemplate restTemplate;
-    @Value(value = "${carservice.url}")
-    private String carEndpointUrl;
+    private final KafkaProducer kafkaProducer;
+    private final KafkaListeners kafkaListeners;
 
     @Override
     public List<ClientDto> getClients(Integer offset, Integer limit) {
@@ -52,13 +54,14 @@ public class ClientServiceImpl implements ClientService {
     }
 
     @Override
-    public String deleteClientById(Long clientId) throws NotFoundException, BadRequestException {
+    public String deleteClientById(Long clientId) throws NotFoundException, BadRequestException, InterruptedException {
         Optional<ClientEntity> optionalClient = clientRepository.findById(clientId);
         if(optionalClient.isEmpty()) {
             throw new NotFoundException("Client with id = " + clientId + " not found");
         }
-        ResponseEntity<Boolean> response = restTemplate.getForEntity(carEndpointUrl, Boolean.class);
-        if(response.getBody()) {
+        kafkaProducer.sendDeleteClientRequest(new DeleteClientRequest(clientId));
+        boolean isDeleted = kafkaListeners.waitForDeleteClientResponse().getIsDeleted();
+        if(isDeleted) {
             clientRepository.delete(optionalClient.get());
             return "Client with id = " + clientId + " was successfully deleted";
         } else {
