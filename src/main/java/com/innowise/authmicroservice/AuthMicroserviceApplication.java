@@ -1,5 +1,6 @@
 package com.innowise.authmicroservice;
 
+import avro.NotificationRequest;
 import com.innowise.authmicroservice.entity.ClientEntity;
 import com.innowise.authmicroservice.entity.RefreshTokenEntity;
 import com.innowise.authmicroservice.entity.Role;

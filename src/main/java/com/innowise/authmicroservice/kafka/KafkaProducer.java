@@ -1,6 +1,7 @@
 package com.innowise.authmicroservice.kafka;
 
 import avro.DeleteClientRequest;
+import avro.NotificationRequest;
 import avro.UserDetailsResponse;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
@@ -16,9 +17,9 @@ public class KafkaProducer {
     private String topicUserDetailsResponse;
     @Value(value = "${kafka.topics.delete_client_request}")
     private String topicDeleteClientRequest;
-
-    @NonNull
-    private KafkaTemplate<String, Object> kafkaTemplate;
+    @Value(value = "${kafka.topics.notification_request}")
+    private String topicNotificationRequest;
+    private final KafkaTemplate<String, Object> kafkaTemplate;
 
     public void sendUserDetailsResponse(UserDetailsResponse userDetailsResponse) {
         kafkaTemplate.send(topicUserDetailsResponse, userDetailsResponse);
@@ -26,5 +27,9 @@ public class KafkaProducer {
 
     public void sendDeleteClientRequest(DeleteClientRequest deleteClientRequest) {
         kafkaTemplate.send(topicDeleteClientRequest, deleteClientRequest);
+    }
+
+    public void sendNotificationRequest(NotificationRequest notificationRequest) {
+        kafkaTemplate.send(topicNotificationRequest, notificationRequest);
     }
 }

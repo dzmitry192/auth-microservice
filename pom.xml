@@ -171,6 +171,7 @@
                         <param>^UserDetailsResponse$</param>
                         <param>^DeleteClientRequest</param>
                         <param>^DeleteClientResponse</param>
+                        <param>^NotificationRequest</param>
                     </subjectPatterns>
                 </configuration>
 

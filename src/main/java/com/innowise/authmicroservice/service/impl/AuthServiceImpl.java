@@ -1,11 +1,13 @@
 package com.innowise.authmicroservice.service.impl;
 
+import avro.NotificationRequest;
 import com.innowise.authmicroservice.entity.ClientEntity;
 import com.innowise.authmicroservice.entity.RefreshTokenEntity;
 import com.innowise.authmicroservice.entity.Role;
 import com.innowise.authmicroservice.exception.ClientAlreadyExistsException;
 import com.innowise.authmicroservice.exception.InvalidTokenException;
 import com.innowise.authmicroservice.exception.NotFoundException;
+import com.innowise.authmicroservice.kafka.KafkaProducer;
 import com.innowise.authmicroservice.payload.request.LoginRequest;
 import com.innowise.authmicroservice.payload.request.RefreshTokenRequest;
 import com.innowise.authmicroservice.payload.request.SignupRequest;
@@ -16,7 +18,6 @@ import com.innowise.authmicroservice.repository.RefreshTokenRepository;
 import com.innowise.authmicroservice.service.AuthService;
 import com.innowise.authmicroservice.utils.JwtUtils;
 import lombok.AllArgsConstructor;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -27,6 +28,7 @@ public class AuthServiceImpl implements AuthService {
     private final JwtUtils jwtUtils;
     private final ClientRepository clientRepository;
     private final RefreshTokenRepository refreshTokenRepository;
+    private final KafkaProducer kafkaProducer;
 
     @Override
     public LoginResponse login(LoginRequest login) throws NotFoundException {
@@ -57,6 +59,12 @@ public class AuthServiceImpl implements AuthService {
         RefreshTokenEntity refreshToken = jwtUtils.generateRefreshToken(client);
 
         refreshTokenRepository.save(refreshToken);
+
+        kafkaProducer.sendNotificationRequest(new NotificationRequest(
+                client.getEmail(),
+                "Регистрация",
+                "Вы успешно зарегистрировались на сайте"
+        ));
 
         return new SignupAndRefreshTokenResponse(accessToken, refreshToken.getToken());
     }
