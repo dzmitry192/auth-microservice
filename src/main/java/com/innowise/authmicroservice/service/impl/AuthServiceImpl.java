@@ -1,9 +1,12 @@
 package com.innowise.authmicroservice.service.impl;
 
+import avro.ClientActionRequest;
 import avro.NotificationRequest;
 import com.innowise.authmicroservice.entity.ClientEntity;
 import com.innowise.authmicroservice.entity.RefreshTokenEntity;
 import com.innowise.authmicroservice.entity.Role;
+import com.innowise.authmicroservice.enums.ActionEnum;
+import com.innowise.authmicroservice.enums.ActionTypeEnum;
 import com.innowise.authmicroservice.exception.ClientAlreadyExistsException;
 import com.innowise.authmicroservice.exception.InvalidTokenException;
 import com.innowise.authmicroservice.exception.NotFoundException;
@@ -20,6 +23,10 @@ import com.innowise.authmicroservice.utils.JwtUtils;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.Optional;
 
 @Service
@@ -31,17 +38,19 @@ public class AuthServiceImpl implements AuthService {
     private final KafkaProducer kafkaProducer;
 
     @Override
-    public LoginResponse login(LoginRequest login) throws NotFoundException {
+    public LoginResponse login(LoginRequest login) throws NotFoundException, ParseException {
         ClientEntity client = clientRepository.findByEmail(login.getEmail());
         if (client == null) {
             throw new NotFoundException("Client with email = " + login.getEmail() + " not found");
         }
 
+        kafkaProducer.sendClientActionRequest(new ClientActionRequest(login.getEmail(), ActionEnum.LOGIN_ACTION.getAction(), ActionTypeEnum.LOGIN_ACTION_TYPE.getActionType(), LocalDateTime.now().toString()));
+
         return new LoginResponse(jwtUtils.generateAccessToken(client));
     }
 
     @Override
-    public SignupAndRefreshTokenResponse signup(SignupRequest signup) throws ClientAlreadyExistsException {
+    public SignupAndRefreshTokenResponse signup(SignupRequest signup) throws ClientAlreadyExistsException, ParseException {
         if (clientRepository.existsByEmail(signup.getEmail())) {
             throw new ClientAlreadyExistsException("Client with email = " + signup.getEmail() + " already exists");
         }
@@ -66,16 +75,21 @@ public class AuthServiceImpl implements AuthService {
                 "Вы успешно зарегистрировались на сайте"
         ));
 
+        kafkaProducer.sendClientActionRequest(new ClientActionRequest(signup.getEmail(), ActionEnum.SIGNUP_ACTION.getAction(), ActionTypeEnum.SIGNUP_ACTION_TYPE.getActionType(), LocalDateTime.now().toString()));
+
         return new SignupAndRefreshTokenResponse(accessToken, refreshToken.getToken());
     }
 
     @Override
-    public SignupAndRefreshTokenResponse refresh(RefreshTokenRequest refreshTokenRequest) throws NotFoundException, InvalidTokenException {
+    public SignupAndRefreshTokenResponse refresh(RefreshTokenRequest refreshTokenRequest) throws NotFoundException, InvalidTokenException, ParseException {
         if (jwtUtils.validateRefreshToken(refreshTokenRequest.getRefreshToken())) {
             RefreshTokenEntity refreshToken = refreshTokenRepository.findByToken(refreshTokenRequest.getRefreshToken());
             Optional<ClientEntity> client = clientRepository.findById(refreshToken.getClientId());
             if (client.isPresent()) {
                 String accessToken = jwtUtils.generateAccessToken(client.get());
+
+                kafkaProducer.sendClientActionRequest(new ClientActionRequest(client.get().getEmail(), ActionEnum.REFRESH_ACTION.getAction(), ActionTypeEnum.REFRESH_ACTION_TYPE.getActionType(), LocalDateTime.now().toString()));
+
                 return new SignupAndRefreshTokenResponse(accessToken, refreshToken.getToken());
             } else {
                 throw new NotFoundException("Client not found");

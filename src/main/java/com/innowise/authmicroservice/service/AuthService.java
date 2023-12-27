@@ -9,10 +9,12 @@ import com.innowise.authmicroservice.payload.request.SignupRequest;
 import com.innowise.authmicroservice.payload.response.LoginResponse;
 import com.innowise.authmicroservice.payload.response.SignupAndRefreshTokenResponse;
 
+import java.text.ParseException;
+
 public interface AuthService {
-    LoginResponse login(LoginRequest login) throws NotFoundException;
+    LoginResponse login(LoginRequest login) throws NotFoundException, ParseException;
 
-    SignupAndRefreshTokenResponse signup(SignupRequest signup) throws ClientAlreadyExistsException;
+    SignupAndRefreshTokenResponse signup(SignupRequest signup) throws ClientAlreadyExistsException, ParseException;
 
-    SignupAndRefreshTokenResponse refresh(RefreshTokenRequest refreshToken) throws NotFoundException, InvalidTokenException;
+    SignupAndRefreshTokenResponse refresh(RefreshTokenRequest refreshToken) throws NotFoundException, InvalidTokenException, ParseException;
 }

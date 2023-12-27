@@ -17,6 +17,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.text.ParseException;
+
 @RestController
 @RequestMapping("/auth")
 @AllArgsConstructor
@@ -25,17 +27,17 @@ public class AuthController {
     private final AuthServiceImpl authService;
 
     @PostMapping("/login")
-    public ResponseEntity<LoginResponse> login(@Valid @RequestBody LoginRequest loginRequest) throws NotFoundException {
+    public ResponseEntity<LoginResponse> login(@Valid @RequestBody LoginRequest loginRequest) throws NotFoundException, ParseException {
         return ResponseEntity.ok().body(authService.login(loginRequest));
     }
 
     @PostMapping("/signup")
-    public ResponseEntity<SignupAndRefreshTokenResponse> signup(@Valid @RequestBody SignupRequest signupRequest) throws ClientAlreadyExistsException {
+    public ResponseEntity<SignupAndRefreshTokenResponse> signup(@Valid @RequestBody SignupRequest signupRequest) throws ClientAlreadyExistsException, ParseException {
         return ResponseEntity.ok().body(authService.signup(signupRequest));
     }
 
     @PostMapping("/refresh")
-    public ResponseEntity<SignupAndRefreshTokenResponse> refresh(@Valid @RequestBody RefreshTokenRequest refreshTokenRequest) throws NotFoundException, InvalidTokenException {
+    public ResponseEntity<SignupAndRefreshTokenResponse> refresh(@Valid @RequestBody RefreshTokenRequest refreshTokenRequest) throws NotFoundException, InvalidTokenException, ParseException {
         return ResponseEntity.ok().body(authService.refresh(refreshTokenRequest));
     }
 }

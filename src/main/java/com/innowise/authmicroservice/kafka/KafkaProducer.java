@@ -1,5 +1,6 @@
 package com.innowise.authmicroservice.kafka;
 
+import avro.ClientActionRequest;
 import avro.DeleteClientRequest;
 import avro.NotificationRequest;
 import avro.UserDetailsResponse;
@@ -19,6 +20,8 @@ public class KafkaProducer {
     private String topicDeleteClientRequest;
     @Value(value = "${kafka.topics.notification_request}")
     private String topicNotificationRequest;
+    @Value(value = "${kafka.topics.user_action_request}")
+    private String topicClientActionRequest;
     private final KafkaTemplate<String, Object> kafkaTemplate;
 
     public void sendUserDetailsResponse(UserDetailsResponse userDetailsResponse) {
@@ -31,5 +34,9 @@ public class KafkaProducer {
 
     public void sendNotificationRequest(NotificationRequest notificationRequest) {
         kafkaTemplate.send(topicNotificationRequest, notificationRequest);
+    }
+
+    public void sendClientActionRequest(ClientActionRequest clientActionRequest) {
+        kafkaTemplate.send(topicClientActionRequest, clientActionRequest);
     }
 }

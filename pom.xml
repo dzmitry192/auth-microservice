@@ -172,6 +172,7 @@
                         <param>^DeleteClientRequest</param>
                         <param>^DeleteClientResponse</param>
                         <param>^NotificationRequest</param>
+                        <param>^ClientActionRequest</param>
                     </subjectPatterns>
                 </configuration>
 
