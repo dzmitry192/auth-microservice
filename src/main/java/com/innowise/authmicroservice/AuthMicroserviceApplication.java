@@ -1,6 +1,5 @@
 package com.innowise.authmicroservice;
 
-import avro.NotificationRequest;
 import com.innowise.authmicroservice.entity.ClientEntity;
 import com.innowise.authmicroservice.entity.RefreshTokenEntity;
 import com.innowise.authmicroservice.entity.Role;
@@ -11,10 +10,11 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.context.annotation.Bean;
-import org.springframework.web.client.RestTemplate;
 
 @SpringBootApplication
+@EnableDiscoveryClient
 @RequiredArgsConstructor
 public class AuthMicroserviceApplication {
 
@@ -37,10 +37,5 @@ public class AuthMicroserviceApplication {
             System.out.println("ACCESS: " + accessToken);
             System.out.println("REFRESH: " + refreshToken.getToken());
         };
-    }
-
-    @Bean
-    public RestTemplate restTemplate() {
-        return new RestTemplate();
     }
 }
